@@ -2,9 +2,9 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-  module('phonecatApp').
+  module('raceConditions').
   component('formList', {
-    template:"<p>Kappa</p>",
+    templateUrl:'register/register.view.html',
     controller: function PhoneListController() {
       this.phones = [
         {
