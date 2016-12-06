@@ -7,20 +7,20 @@
 <body>
 <div class="login-page">
     <div class="form">
-        <form class="register-form">
-            <input type="text" placeholder="name"/>
-            <input type="password" placeholder="password"/>
-            <input type="text" placeholder="email address"/>
-            <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form">
+        <form class="login-form" ng-hide="notRegistered == true">
             <input type="text" ng-model = "name" placeholder="username"/>
             <p>{{name}}</p>
             <input type="password" ng-model = "password" placeholder="password"/>
             <p>{{password}}</p>
-            <button>login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <button>Login</button>
+            <p class="message">Not registered? <button class="message" ng-click="notRegistered=true">Create an account</button></p>
+        </form>
+        <form ng-hide="notRegistered == false" class="register-form">
+            <input type="text" placeholder="name"/>
+            <input type="password" placeholder="password"/>
+            <input type="text" placeholder="email address"/>
+            <button>create</button>
+            <p class="message">Already registered? <button class="message" ng-click="notRegistered=false"> Sign In</button></p>
         </form>
     </div>
 </div>

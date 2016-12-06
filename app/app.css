@@ -28,7 +28,6 @@
 }
 .form button {
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
   width: 100%;
@@ -48,12 +47,13 @@
   color: #b3b3b3;
   font-size: 12px;
 }
-.form .message a {
+.form .message button {
   color: #4CAF50;
   text-decoration: none;
+  background: #FFFFFF;
+  width: 50%;
 }
 .form .register-form {
-  display: none;
 }
 .container {
   position: relative;
