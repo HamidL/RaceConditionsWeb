@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Created by Lock on 30/11/16.
  */
@@ -30,3 +31,7 @@
     }
 
 })();
+=======
+function registerController() {
+}
+>>>>>>> 491b16e87d35f3b9be3366f24515fad1d150cd27

@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.5.9
+ * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -40,7 +40,7 @@ angular.mock.$Browser = function() {
   var self = this;
 
   this.isMock = true;
-  self.$$url = 'http://server/';
+  self.$$url = "http://server/";
   self.$$lastUrl = self.$$url; // used by url polling fn
   self.pollFns = [];
 
@@ -252,19 +252,19 @@ angular.mock.$ExceptionHandlerProvider = function() {
       case 'rethrow':
         var errors = [];
         handler = function(e) {
-          if (arguments.length === 1) {
+          if (arguments.length == 1) {
             errors.push(e);
           } else {
             errors.push([].slice.call(arguments, 0));
           }
-          if (mode === 'rethrow') {
+          if (mode === "rethrow") {
             throw e;
           }
         };
         handler.errors = errors;
         break;
       default:
-        throw new Error('Unknown mode \'' + mode + '\', only \'log\'/\'rethrow\' modes are allowed!');
+        throw new Error("Unknown mode '" + mode + "', only 'log'/'rethrow' modes are allowed!");
     }
   };
 
@@ -414,8 +414,8 @@ angular.mock.$LogProvider = function() {
         });
       });
       if (errors.length) {
-        errors.unshift('Expected $log to be empty! Either a message was logged unexpectedly, or ' +
-          'an expected log message was not checked and removed:');
+        errors.unshift("Expected $log to be empty! Either a message was logged unexpectedly, or " +
+          "an expected log message was not checked and removed:");
         errors.push('');
         throw new Error(errors.join('\n---------\n'));
       }
@@ -558,13 +558,16 @@ angular.mock.$IntervalProvider = function() {
 };
 
 
-function jsonStringToDate(string) {
-  // The R_ISO8061_STR regex is never going to fit into the 100 char limit!
-  // eslit-disable-next-line max-len
-  var R_ISO8061_STR = /^(-?\d{4})-?(\d\d)-?(\d\d)(?:T(\d\d)(?::?(\d\d)(?::?(\d\d)(?:\.(\d{3}))?)?)?(Z|([+-])(\d\d):?(\d\d)))?$/;
+/* jshint -W101 */
+/* The R_ISO8061_STR regex is never going to fit into the 100 char limit!
+ * This directive should go inside the anonymous function but a bug in JSHint means that it would
+ * not be enacted early enough to prevent the warning.
+ */
+var R_ISO8061_STR = /^(-?\d{4})-?(\d\d)-?(\d\d)(?:T(\d\d)(?:\:?(\d\d)(?:\:?(\d\d)(?:\.(\d{3}))?)?)?(Z|([+-])(\d\d):?(\d\d)))?$/;
 
+function jsonStringToDate(string) {
   var match;
-  if ((match = string.match(R_ISO8061_STR))) {
+  if (match = string.match(R_ISO8061_STR)) {
     var date = new Date(0),
         tzHour = 0,
         tzMin  = 0;
@@ -647,10 +650,9 @@ angular.mock.TzDate = function(offset, timestamp) {
 
     timestamp = self.origDate.getTime();
     if (isNaN(timestamp)) {
-      // eslint-disable-next-line no-throw-literal
       throw {
-        name: 'Illegal Argument',
-        message: 'Arg \'' + tsStr + '\' passed into TzDate constructor is not a valid date string'
+        name: "Illegal Argument",
+        message: "Arg '" + tsStr + "' passed into TzDate constructor is not a valid date string"
       };
     }
   } else {
@@ -756,7 +758,7 @@ angular.mock.TzDate = function(offset, timestamp) {
 
   angular.forEach(unimplementedMethods, function(methodName) {
     self[methodName] = function() {
-      throw new Error('Method \'' + methodName + '\' is not implemented in the TzDate mock');
+      throw new Error("Method '" + methodName + "' is not implemented in the TzDate mock");
     };
   });
 
@@ -765,6 +767,7 @@ angular.mock.TzDate = function(offset, timestamp) {
 
 //make "tzDateInstance instanceof Date" return true
 angular.mock.TzDate.prototype = Date.prototype;
+/* jshint +W101 */
 
 
 /**
@@ -1128,7 +1131,7 @@ angular.mock.dump = function(object) {
 
       $http.post('/add-msg.py', message, { headers: headers } ).then(function(response) {
         $scope.status = '';
-      })['catch'](function() {
+      }).catch(function() {
         $scope.status = 'Failed...';
       });
     };
@@ -1212,7 +1215,7 @@ angular.mock.dump = function(object) {
          $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
            // check if the header was sent, if it wasn't the expectation won't
            // match the request and the test will fail
-           return headers['Authorization'] === 'xxx';
+           return headers['Authorization'] == 'xxx';
          }).respond(201, '');
 
          $rootScope.saveMessage('whatever');
@@ -1354,11 +1357,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
 
     function wrapResponse(wrapped) {
       if (!$browser && timeout) {
-        if (timeout.then) {
-          timeout.then(handleTimeout);
-        } else {
-          $timeout(handleTimeout, timeout);
-        }
+        timeout.then ? timeout.then(handleTimeout) : $timeout(handleTimeout, timeout);
       }
 
       return handleResponse;
@@ -1789,34 +1788,24 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @ngdoc method
    * @name $httpBackend#flush
    * @description
-   * Flushes pending requests using the trained responses. Requests are flushed in the order they
-   * were made, but it is also possible to skip one or more requests (for example to have them
-   * flushed later). This is useful for simulating scenarios where responses arrive from the server
-   * in any order.
+   * Flushes all pending requests using the trained responses.
    *
-   * If there are no pending requests to flush when the method is called, an exception is thrown (as
-   * this is typically a sign of programming error).
-   *
-   * @param {number=} count - Number of responses to flush. If undefined/null, all pending requests
-   *     (starting after `skip`) will be flushed.
-   * @param {number=} [skip=0] - Number of pending requests to skip. For example, a value of `5`
-   *     would skip the first 5 pending requests and start flushing from the 6th onwards.
+   * @param {number=} count Number of responses to flush (in the order they arrived). If undefined,
+   *   all pending requests will be flushed. If there are no pending requests when the flush method
+   *   is called an exception is thrown (as this typically a sign of programming error).
    */
-  $httpBackend.flush = function(count, skip, digest) {
+  $httpBackend.flush = function(count, digest) {
     if (digest !== false) $rootScope.$digest();
-
-    skip = skip || 0;
-    if (skip >= responses.length) throw new Error('No pending request to flush !');
+    if (!responses.length) throw new Error('No pending request to flush !');
 
     if (angular.isDefined(count) && count !== null) {
       while (count--) {
-        var part = responses.splice(skip, 1);
-        if (!part.length) throw new Error('No more pending request to flush !');
-        part[0]();
+        if (!responses.length) throw new Error('No more pending request to flush !');
+        responses.shift()();
       }
     } else {
-      while (responses.length > skip) {
-        responses.splice(skip, 1)[0]();
+      while (responses.length) {
+        responses.shift()();
       }
     }
     $httpBackend.verifyNoOutstandingExpectation(digest);
@@ -1904,15 +1893,14 @@ function MockHttpExpectation(method, url, data, headers, keys) {
   }
 
   function compareUrl(u) {
-    return (url.slice(0, url.indexOf('?')) === u.slice(0, u.indexOf('?')) &&
-      getUrlParams(url).join() === getUrlParams(u).join());
+    return (url.slice(0, url.indexOf('?')) == u.slice(0, u.indexOf('?')) && getUrlParams(url).join() == getUrlParams(u).join());
   }
 
   this.data = data;
   this.headers = headers;
 
   this.match = function(m, u, d, h) {
-    if (method !== m) return false;
+    if (method != m) return false;
     if (!this.matchUrl(u)) return false;
     if (angular.isDefined(d) && !this.matchData(d)) return false;
     if (angular.isDefined(h) && !this.matchHeaders(h)) return false;
@@ -1923,7 +1911,7 @@ function MockHttpExpectation(method, url, data, headers, keys) {
     if (!url) return true;
     if (angular.isFunction(url.test)) return url.test(u);
     if (angular.isFunction(url)) return url(u);
-    return (url === u || compareUrl(u));
+    return (url == u || compareUrl(u));
   };
 
   this.matchHeaders = function(h) {
@@ -1939,7 +1927,6 @@ function MockHttpExpectation(method, url, data, headers, keys) {
     if (data && !angular.isString(data)) {
       return angular.equals(angular.fromJson(angular.toJson(data)), angular.fromJson(d));
     }
-    // eslint-disable-next-line eqeqeq
     return data == d;
   };
 
@@ -1971,7 +1958,7 @@ function MockHttpExpectation(method, url, data, headers, keys) {
       var obj = {}, key_value, key,
           queryStr = u.indexOf('?') > -1
           ? u.substring(u.indexOf('?') + 1)
-          : '';
+          : "";
 
       angular.forEach(queryStr.split('&'), function(keyValue) {
         if (keyValue) {
@@ -2038,7 +2025,7 @@ function MockXhr() {
 
     header = undefined;
     angular.forEach(this.$$respHeaders, function(headerVal, headerName) {
-      if (!header && angular.lowercase(headerName) === name) header = headerVal;
+      if (!header && angular.lowercase(headerName) == name) header = headerVal;
     });
     return header;
   };
@@ -2111,7 +2098,7 @@ angular.mock.$TimeoutDecorator = ['$delegate', '$browser', function($delegate, $
   function formatPendingTasksAsString(tasks) {
     var result = [];
     angular.forEach(tasks, function(task) {
-      result.push('{id: ' + task.id + ', time: ' + task.time + '}');
+      result.push('{id: ' + task.id + ', ' + 'time: ' + task.time + '}');
     });
 
     return result.join(', ');
@@ -2252,8 +2239,7 @@ angular.mock.$ControllerDecorator = ['$delegate', function($delegate) {
  * @param {string=} ident Override the property name to use when attaching the controller to the scope.
  * @return {Object} Instance of requested controller.
  */
-angular.mock.$ComponentControllerProvider = ['$compileProvider',
-    function ComponentControllerProvider($compileProvider) {
+angular.mock.$ComponentControllerProvider = ['$compileProvider', function($compileProvider) {
   this.$get = ['$controller','$injector', '$rootScope', function($controller, $injector, $rootScope) {
     return function $componentController(componentName, locals, bindings, ident) {
       // get all directives associated to the component name
@@ -2413,7 +2399,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * <file name="app.js">
  *   var myApp = angular.module('myApp', []);
  *
- *   myApp.controller('MainCtrl', function MainCtrl($http) {
+ *   myApp.controller('main', function($http) {
  *     var ctrl = this;
  *
  *     ctrl.phones = [];
@@ -2455,7 +2441,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *   });
  * </file>
  * <file name="index.html">
- *   <div ng-controller="MainCtrl as $ctrl">
+ *   <div ng-controller="main as $ctrl">
  *   <form name="newPhoneForm" ng-submit="$ctrl.addPhone($ctrl.newPhone)">
  *     <input type="text" ng-model="$ctrl.newPhone.name">
  *     <input type="submit" value="Add Phone">
@@ -2668,7 +2654,6 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
    * @ngdoc method
    * @name $rootScope.Scope#$countChildScopes
    * @module ngMock
-   * @this $rootScope.Scope
    * @description
    * Counts all the direct and indirect child scopes of the current scope.
    *
@@ -2677,6 +2662,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
    * @returns {number} Total number of child scopes.
    */
   function countChildScopes() {
+    // jshint validthis: true
     var count = 0; // exclude the current scope
     var pendingChildHeads = [this.$$childHead];
     var currentScope;
@@ -2698,7 +2684,6 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
   /**
    * @ngdoc method
    * @name $rootScope.Scope#$countWatchers
-   * @this $rootScope.Scope
    * @module ngMock
    * @description
    * Counts all the watchers of direct and indirect child scopes of the current scope.
@@ -2709,6 +2694,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
    * @returns {number} Total number of watchers.
    */
   function countWatchers() {
+    // jshint validthis: true
     var count = this.$$watchers ? this.$$watchers.length : 0; // include the current scope
     var pendingChildHeads = [this.$$childHead];
     var currentScope;
@@ -2728,7 +2714,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
 }];
 
 
-(function(jasmineOrMocha) {
+!(function(jasmineOrMocha) {
 
   if (!jasmineOrMocha) {
     return;
@@ -2823,7 +2809,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
    *
    * You cannot call `sharedInjector()` from within a context already using `sharedInjector()`.
    *
-   * ## Example
+   * ## Example
    *
    * Typically beforeAll is used to make many assertions about a single operation. This can
    * cut down test run-time as the test setup doesn't need to be re-run, and enabling focussed
@@ -2861,14 +2847,14 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
    */
   module.sharedInjector = function() {
     if (!(module.$$beforeAllHook && module.$$afterAllHook)) {
-      throw Error('sharedInjector() cannot be used unless your test runner defines beforeAll/afterAll');
+      throw Error("sharedInjector() cannot be used unless your test runner defines beforeAll/afterAll");
     }
 
     var initialized = false;
 
-    module.$$beforeAllHook(/** @this */ function() {
+    module.$$beforeAllHook(function() {
       if (injectorState.shared) {
-        injectorState.sharedError = Error('sharedInjector() cannot be called inside a context that has already called sharedInjector()');
+        injectorState.sharedError = Error("sharedInjector() cannot be called inside a context that has already called sharedInjector()");
         throw injectorState.sharedError;
       }
       initialized = true;
@@ -2887,10 +2873,10 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
   };
 
   module.$$beforeEach = function() {
-    if (injectorState.shared && currentSpec && currentSpec !== this) {
+    if (injectorState.shared && currentSpec && currentSpec != this) {
       var state = currentSpec;
       currentSpec = this;
-      angular.forEach(['$injector','$modules','$providerInjector', '$injectorStrict'], function(k) {
+      angular.forEach(["$injector","$modules","$providerInjector", "$injectorStrict"], function(k) {
         currentSpec[k] = state[k];
         state[k] = null;
       });
@@ -3045,7 +3031,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
 
 
 
-  var ErrorAddingDeclarationLocationStack = function ErrorAddingDeclarationLocationStack(e, errorForStack) {
+  var ErrorAddingDeclarationLocationStack = function(e, errorForStack) {
     this.message = e.message;
     this.name = e.name;
     if (e.line) this.line = e.line;
@@ -3063,11 +3049,11 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
     if (!errorForStack.stack) {
       try {
         throw errorForStack;
-      } catch (e) { /* empty */ }
+      } catch (e) {}
     }
-    return wasInjectorCreated() ? WorkFn.call(currentSpec) : WorkFn;
+    return wasInjectorCreated() ? workFn.call(currentSpec) : workFn;
     /////////////////////
-    function WorkFn() {
+    function workFn() {
       var modules = currentSpec.$modules || [];
       var strictDi = !!currentSpec.$injectorStrict;
       modules.unshift(['$injector', function($injector) {
@@ -3080,7 +3066,7 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
         if (strictDi) {
           // If strictDi is enabled, annotate the providerInjector blocks
           angular.forEach(modules, function(moduleFn) {
-            if (typeof moduleFn === 'function') {
+            if (typeof moduleFn === "function") {
               angular.injector.$$annotate(moduleFn);
             }
           });
@@ -3095,7 +3081,9 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
           injector.annotate(blockFns[i]);
         }
         try {
+          /* jshint -W040 *//* Jasmine explicitly provides a `this` object when calling functions */
           injector.invoke(blockFns[i] || angular.noop, this);
+          /* jshint +W040 */
         } catch (e) {
           if (e.stack && errorForStack) {
             throw new ErrorAddingDeclarationLocationStack(e, errorForStack);
