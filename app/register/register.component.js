@@ -3,7 +3,7 @@
 // Register `phoneList` component, along with its associated controller and template
 angular.
   module('raceConditions').
-  component('formList', {
+  component('formRegister', {
     templateUrl:'register/register.view.html',
     controller: function registerController($scope) {
         $scope.notRegistered=false;
