@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<style>
+    table, th , td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style>
+<table>
+    <p>TableName: {{table.tableName}}</p>
+
+        <tr ng-repeat="column in table.columns">
+            <div ng-repeat="columnName in table.columnNames">
+                <td>{{ column.colmnValues }}</td>
+                <td>{{ column.colmnValues }}</td>
+            </div>
+        </tr>
+
+</table>
+</body>
+</html>
