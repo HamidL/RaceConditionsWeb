@@ -7,5 +7,13 @@ angular.
     templateUrl:'register/register.view.html',
     controller: function registerController($scope) {
         $scope.notRegistered=false;
+
+        $scope.login = function (){
+
+        }
+
+        $scope.create = function (){
+
+        }
     }
   });
