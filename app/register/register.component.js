@@ -9,7 +9,8 @@ angular.
         $scope.notRegistered=false;
 
         $scope.login = function (){
-
+            validateUsername($scope.name);
+            return "Success";
         }
 
         $scope.create = function (){
@@ -17,13 +18,17 @@ angular.
         }
 
         function validateUsername(username){
-
+            if (username.length > 15 || username.length < 5) return false;
+            return /^\w+$/.test(username); //a-zA-z0-9
         }
-        function validatePassword(password){
 
+        function validatePassword(password){
+            if (password.length > 20 || password.length < 6) return false;
+            return /^\w+$/.test(password);
         }
         function validateMail(mail){
-
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(mail);
         }
     }
   });
