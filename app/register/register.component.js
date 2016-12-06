@@ -8,15 +8,15 @@ angular.
     controller: function PhoneListController() {
       this.phones = [
         {
-            "title": "Un form", 
+            "title": "Un form",
             "fields": [
                 {
-                "name": "botó", 
-                "binding": "entrada de text", 
+                "name": "botó",
+                "binding": "entrada de text",
                 "type": "text",
                 "validationRules": [
                     "size > 4",
-                    "AAAAA", 
+                    "AAAAA",
                     "size < 10",
                 ]
                 }
