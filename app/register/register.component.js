@@ -15,5 +15,15 @@ angular.
         $scope.create = function (){
 
         }
+
+        function validateUsername(username){
+
+        }
+        function validatePassword(password){
+
+        }
+        function validateMail(mail){
+
+        }
     }
   });
