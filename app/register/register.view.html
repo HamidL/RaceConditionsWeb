@@ -12,6 +12,7 @@
             <input type="password" ng-model = "password" placeholder="password"/>
             <button ng-click="login()">Login</button>
             <p class="message">Not registered? <button class="message" ng-click="notRegistered=true">Create an account</button></p>
+            "El valor del nombre es " + {{name}} + "y el valor de password es " + {{password}}
         </form>
         <form ng-hide="notRegistered == false" class="register-form">
             <input type="text" placeholder="username"/>
