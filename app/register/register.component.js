@@ -10,7 +10,25 @@ angular.
 
         $scope.login = function (){
             validateUsername($scope.name);
-            return "Success";
+
+            var loginData = {
+                "username": $scope.username,
+                "password": $scope.password
+            };
+
+            //Así es como se hace una llamada asíncrona
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.stringify(this.responseText);
+
+                }
+                else{
+                    console.log(response);
+                }
+            };
+            xhttp.open("POST", URL+"/login");
+            xhttp.send(loginData);
         }
 
         $scope.create = function (){
