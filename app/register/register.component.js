@@ -5,7 +5,7 @@ angular.
   module('raceConditions').
   component('formRegister', {
     templateUrl:'register/register.view.html',
-    controller: function registerController($scope, $window) {
+    controller: function registerController($scope, $rootScope, $window) {
         $scope.notRegistered=false;
 
         $scope.login = function (){
@@ -33,9 +33,9 @@ angular.
                             $location.path(register/register.view); //path not hash
                         }
                     }*/
-                    if (response.status === "error") {
-                        $window.alert(response.ret.errorMessage);
-                    }
+                    var jsonResp = JSON.parse(xhttp.responseText);
+                    console.log(JSON.parse(xhttp.responseText));
+                    $rootScope.token = jsonResp.ret.accesToken;
                 }
                 else{
                     console.log(response);
@@ -50,6 +50,21 @@ angular.
         }
 
         $scope.create = function (){
+            if (validateUsername($scope.userReg) !== true) {
+                $window.alert("The usernameReg doesn't match the requirements");
+                return;
+            }
+            else if (validatePassword($scope.passReg) !== true) {
+                $window.alert("The password doesn't match the requirements");
+                return;
+            }
+            else if (validateMail($scope.mailReg) !== true) {
+                $window.alert("Invalid mail address");
+            }
+
+        }
+
+        function switchFunct() {
 
         }
 
