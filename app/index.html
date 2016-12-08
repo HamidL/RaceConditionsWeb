@@ -9,11 +9,14 @@
     <script src="app.js"></script>
     <script src="register/register.component.js"></script>
     <script src="table/table.component.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
   </head>
   <body>
+  <header ng-include="'header.html'"></header>
+  <main ng-view></main>
 
-    <!-- Use a custom component to render a list of phones -->
+    <!-- Use a custom component to render a list of phones
     <form-register></form-register>
-
+    -->
   </body>
 </html>

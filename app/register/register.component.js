@@ -6,7 +6,6 @@ angular.
   component('formRegister', {
     templateUrl:'register/register.view.html',
     controller: function registerController($scope, $rootScope, $window) {
-        $scope.notRegistered=false;
 
         $scope.login = function (){
             if (validateUsername($scope.name) !== true) {
@@ -41,7 +40,7 @@ angular.
                     console.log(response);
                 }
             };
-            URL = "https://hlmmfg.appspot.com/_ah/api/loginAPI/v1";
+            var URL = "https://hlmmfg.appspot.com/_ah/api/loginAPI/v1";
             xhttp.open("POST", URL+"/login");
             xhttp.setRequestHeader("content-type", "application/json");
             xhttp.setRequestHeader("cache-control", "no-cache");
@@ -82,4 +81,11 @@ angular.
             return re.test(mail);
         }
     }
-  });
+  })
+    .controller('registerController', function ($scope) {
+    var init = function () {
+        $scope.notRegistered = false;
+    };
+    // fire on controller loaded
+    init();
+});
