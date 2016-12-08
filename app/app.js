@@ -6,12 +6,15 @@ mod.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/login', {
             templateUrl: 'register/register.view.html',
-            component: 'register/register.component.js',
             controller: 'registerController'
         })
         .when('/mainMenu', {
             templateUrl: 'menu/menu.view.html',
             component: 'menu/menu.component.js'
+        })
+        .when('/table', {
+            templateUrl: 'table/table.view.html',
+            component: 'table/table.component.js'
         })
         .otherwise({
             redirectTo: '/login'
