@@ -41,7 +41,7 @@ angular.
                     console.log(response);
                 }
             };
-            URL = "https://hlmmfg.appspot.com/_ah/api/loginAPI/v1";
+            var URL = "https://hlmmfg.appspot.com/_ah/api/loginAPI/v1";
             xhttp.open("POST", URL+"/login");
             xhttp.setRequestHeader("content-type", "application/json");
             xhttp.setRequestHeader("cache-control", "no-cache");

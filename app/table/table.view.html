@@ -18,16 +18,23 @@
         background-color: #ffffff;
     }
 </style>
-<table>
-    <p>TableName: {{table.tableName}}</p>
+    <table>
+        <table border="1px solid black">
+            <tr>
+                <th ng-repeat="columnHeader in table.columnNames">
+                    {{columnHeader}}
+                </th>
+            </tr>
+            <tr ng-repeat="column in table.columns">
+                {{$index}}
+                <td ng-repeat="columnValue in column.colmnValues">
+                    <input type="text" ng-model=model[column.id+$index] ng-value=columnValue ng-readonly='!($index == eEditable)' ng-change="inputChanged()" ng-dblclick="editing(column.id,$index)"/>
+                </td>
+            </tr>
 
-        <tr ng-repeat="column in table.columns">
-            <div ng-repeat="columnName in table.columnNames">
-                <td>{{ column.colmnValues }}</td>
-                <td>{{ column.colmnValues }}</td>
-            </div>
-        </tr>
-
-</table>
+        </table>
+    </table>
+{{count}}
+{{timer}}
 </body>
 </html>
