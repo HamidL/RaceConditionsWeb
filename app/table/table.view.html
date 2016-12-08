@@ -17,8 +17,13 @@
     table tr:nth-child(even) {
         background-color: #ffffff;
     }
+    .table-container{
+        margin: 0 auto;
+    }
 </style>
-    <table>
+
+<div class="table-container">
+    <table class="race-table">
         <table border="1px solid black">
             <tr>
                 <th ng-repeat="columnHeader in table.columnNames">
@@ -34,7 +39,6 @@
 
         </table>
     </table>
-{{count}}
-{{timer}}
+</div>
 </body>
 </html>
