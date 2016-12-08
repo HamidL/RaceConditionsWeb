@@ -10,7 +10,7 @@ mod.config(['$routeProvider', function($routeProvider) {
         })
         .when('/mainMenu', {
             templateUrl: 'menu/menu.view.html',
-            component: 'menu/menu.component.js'
+            controller: 'menuController'
         })
         .when('/table', {
             templateUrl: 'table/table.view.html',
