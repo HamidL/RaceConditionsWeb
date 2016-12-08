@@ -2,11 +2,7 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-module('raceConditions').
-component('formTable', {
-    templateUrl:'table/table.view.html',
-    controller: function tableController($scope,$rootScope,$timeout,$http) {
-        $rootScope.accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZ2h6Zm1oc2JXMW1aM0lSQ3hJRVZYTmxjaGlBZ0lDQS1NS0VDZ3ciLCJleHAiOjE0ODEyNTk5NTh9.JpghpJY_ApcO2VCNcvV9Z6Qy3AU2ir8ns5UGqdgaWiLM1t6WIpwAWLPLcwVWPQnc6XRZhiVSLGTuA1Z2lyQF1A";
+module('raceConditions').controller('tableController', function tableController($scope,$rootScope,$timeout,$http) {
         var timer;
         $scope.count = 0;
         var actTable = function(){
@@ -98,5 +94,4 @@ component('formTable', {
                 $scope.index =index;
                 $scope.eEditable = index;
             }
-        }
-    })
+        });

@@ -14,7 +14,7 @@ mod.config(['$routeProvider', function($routeProvider) {
         })
         .when('/table', {
             templateUrl: 'table/table.view.html',
-            component: 'table/table.component.js'
+            controller: 'tableController'
         })
         .otherwise({
             redirectTo: '/login'

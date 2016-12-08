@@ -33,8 +33,8 @@ angular.
                          }*/
                         var jsonResp = JSON.parse(xhttp.responseText);
                         console.log(JSON.parse(xhttp.responseText));
-                        $rootScope.token = jsonResp.ret.accesToken;
-                        $location.path('/table')
+                        $rootScope.accessToken = jsonResp.ret.accesToken;
+                        $location.url('/table');
                     }
                     else{
                         console.log(response);
@@ -80,6 +80,7 @@ angular.
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(mail);
             }
+
             var init = function () {
                 $scope.notRegistered = false;
             };
