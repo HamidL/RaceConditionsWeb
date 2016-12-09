@@ -2,13 +2,39 @@
 
 angular.module('raceConditions')
     .controller('menuController',
-        function menuController($scope, $rootScope, $window) {
+        function menuController($scope, $rootScope, $window, $location) {
+            var jsonResp;
             var init = function () {
                 if ($rootScope.token === null) {
                     $window.alert("You need to login first in order to see your created tables");
                 }
-                else $window.alert("aSDASD");
+                else { //el usuario está logueado y tengo su token: cargo sus tablas
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState === 4 && this.status === 200) {
+                            var response = JSON.stringify(this.responseText);
+                            /*if (response.status === "error" && response.ret.errorMessage === "Given token is invalid or has expired") {
+                             $scope.changeView = function(){
+                             $location.path(register/register.view); //path not hash
+                             }
+                             }*/
+                            jsonResp = JSON.parse(xhttp.responseText).ret;
+                            $scope.tables = jsonResp;
+                            $scope.$apply();
+                        }
+                    };
+                    var loginData ="";
+                    var URL = "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1";
+                    xhttp.open("POST", URL+"/getUserTables");
+                    xhttp.setRequestHeader("content-type", "application/json");
+                    xhttp.setRequestHeader("cache-control", "no-cache");
+                    xhttp.setRequestHeader("accesstoken", $rootScope.accessToken);
+                    xhttp.send(loginData);
+                }
             };
             init();
-            $window.alert("hola");
+            $scope.loadTable = function(tableKey) {
+                $rootScope.tableKey = tableKey;
+                $location.url('/table');
+            }
         });

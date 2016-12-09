@@ -37,7 +37,7 @@ module('raceConditions').controller('tableController', function tableController(
 
         var getTableAsync= function () {
             var data = JSON.stringify({
-                "tableInfoKey": "aghzfmhsbW1mZ3IWCxIJVGFibGVJbmZvGICAgICZ0oUKDA"
+                "tableInfoKey": $rootScope.tableKey
             });
             $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
         }
