@@ -2,7 +2,15 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-module('raceConditions').controller('tableController', function tableController($scope,$rootScope,$timeout,$http) {
+module('raceConditions').controller('tableController', function tableController($location,$scope,$rootScope,$timeout,$http) {
+
+        var init = function (){
+            if(!$rootScope.registered){
+                $location.url('/login');
+            }
+        }
+        init();
+
         var timer;
         $scope.count = 0;
         var actTable = function(){
@@ -26,6 +34,10 @@ module('raceConditions').controller('tableController', function tableController(
                     $scope.done=false;
                     console.log(this.responseText);
                     var JSONResponse = JSON.parse(this.responseText);
+                    if(JSONResponse.status == "error"){
+                        $rootScope.registered = false;
+                        $location.url('/login');
+                    }
                     $scope.table = JSONResponse.ret;
                 }
             });

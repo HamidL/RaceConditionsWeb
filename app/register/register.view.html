@@ -7,18 +7,18 @@
 <body ng-app="raceConditions">
 <div class="login-page">
     <div class="form">
-        <form class="login-form" ng-hide="notRegistered == true">
+        <form class="login-form" ng-hide="registered == true">
             <input type="text" ng-model = "name" placeholder="username"/>
             <input type="password" ng-model = "password" placeholder="password"/>
             <button ng-click="login()">Login</button>
-            <p class="message">Not registered? <button class="message" ng-click="notRegistered=true; userReg = null; passReg = null; mailReg = null">Create an account</button></p>
+            <p class="message">Not registered? <button class="message" ng-click="registered=true; userReg = null; passReg = null; mailReg = null">Create an account</button></p>
         </form>
-        <form ng-hide="notRegistered == false" class="register-form">
+        <form ng-hide="registered == false" class="register-form">
             <input type="text" ng-model = "userReg" placeholder="username"/>
             <input type="password" ng-model = "passReg" placeholder="password"/>
             <input type="text" ng-model = "mailReg" placeholder="email address"/>
             <button ng-click="create()">Create</button>
-            <p class="message">Already registered? <button class="message" ng-click="notRegistered=false; name = null; password = null"> Sign In</button></p>
+            <p class="message">Already registered? <button class="message" ng-click="registered=false; name = null; password = null"> Sign In</button></p>
         </form>
         {{token}}
     </div>

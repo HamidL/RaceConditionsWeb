@@ -34,6 +34,7 @@ angular.
                         var jsonResp = JSON.parse(xhttp.responseText);
                         console.log(JSON.parse(xhttp.responseText));
                         $rootScope.accessToken = jsonResp.ret.accesToken;
+                        $rootScope.registered = true;
                         $location.url('/table');
                     }
                     else{
@@ -82,7 +83,7 @@ angular.
             }
 
             var init = function () {
-                $scope.notRegistered = false;
+                $rootScope.registered = false;
             };
             init();
 });

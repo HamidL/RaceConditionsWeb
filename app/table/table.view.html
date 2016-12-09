@@ -7,9 +7,12 @@
 <body>
 <style>
     table, th , td {
+        text-align: center;
         border: 1px solid grey;
         border-collapse: collapse;
         padding: 5px;
+        margin-left:auto;
+        margin-right:auto;
     }
     table tr:nth-child(odd) {
         background-color: #f1f1f1;
@@ -17,9 +20,16 @@
     table tr:nth-child(even) {
         background-color: #ffffff;
     }
-    .table-container{
-        margin: 0 auto;
+    .table-container {
+        margin: auto;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
     }
+    .table-text{
+        text-align: center;
+    }
+
 </style>
 
 <div class="table-container">
@@ -32,13 +42,17 @@
             </tr>
             <tr ng-repeat="column in table.columns">
                 {{$index}}
-                <td ng-repeat="columnValue in column.colmnValues">
-                    <input type="text" ng-model=model[column.id+$index] ng-value=columnValue ng-readonly='!($index == eEditable)' ng-change="inputChanged()" ng-dblclick="editing(column.id,$index)"/>
+                <td ng-repeat="columnValue in column.colmnValues track by $index">
+                    <input type="text" class = "table-text" ng-model=model[column.id+$index] ng-value=columnValue ng-readonly='!($index == eEditable)' ng-change="inputChanged()" ng-dblclick="editing(column.id,$index)"/>
                 </td>
             </tr>
 
         </table>
     </table>
+</div>
+<div>
+    <button>Add new row </button>
+    <button>Add new column</button>
 </div>
 </body>
 </html>
