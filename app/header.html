@@ -1,6 +1,6 @@
 <div  ng-app ="raceConditions"  id="menu-bar">
     <style>
-        ul {
+        .ul-bar {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -8,11 +8,11 @@
             background-color: #333;
         }
 
-        li {
+        .li-bar {
             float: left;
         }
 
-        li a {
+        .li-bar a {
             display: block;
             color: white;
             text-align: center;
@@ -25,8 +25,8 @@
         }
     </style>
     <div ng-hide="!registered">
-        <ul>
-            <li><a href="#/login">LogOut</a></li>
+        <ul class="ul-bar">
+            <li class = "li-bar"><a href="#/login">LogOut</a></li>
             <li><a href="#/mainMenu">Main menu</a></li>
         </ul>
     </div>
