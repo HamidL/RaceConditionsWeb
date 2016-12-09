@@ -6,7 +6,7 @@
 </head>
 <body ng-app="raceConditions">
     <div class="menu-page">
-        <ul ng-repeat="table in tables" ng-click="loadTable(table.tableName)">
+        <ul ng-repeat="table in tables" ng-click="loadTable(table.id)">
             <li>
                 {{table.tableName}}
             </li>

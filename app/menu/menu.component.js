@@ -2,7 +2,7 @@
 
 angular.module('raceConditions')
     .controller('menuController',
-        function menuController($scope, $rootScope, $window) {
+        function menuController($scope, $rootScope, $window, $location) {
             var jsonResp;
             var init = function () {
                 if ($rootScope.token === null) {
@@ -35,5 +35,6 @@ angular.module('raceConditions')
             init();
             $scope.loadTable = function(tableKey) {
                 $rootScope.tableKey = tableKey;
+                $location.url('/table');
             }
         });

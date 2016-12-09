@@ -23,7 +23,7 @@ module('raceConditions').controller('tableController', function tableController(
         var getTableAsync= function () {
             $scope.done=true;
             var data = JSON.stringify({
-                "tableInfoKey": $rootScope.tableToken
+                "tableInfoKey": $rootScope.tableKey
             });
 
             var xhr = new XMLHttpRequest();
