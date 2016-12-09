@@ -4,7 +4,45 @@
 angular.
   module('raceConditions')
     .controller('registerController',
-        function registerController($scope, $rootScope, $window,$location) {
+        function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
+
+            var loginSuccess = function(responseData){
+                console.log("loginSuccess");
+                console.log(responseData.data);
+                if(responseData.data.status == "error"){
+                    $rootScope.registered = false;
+                    $location.url('/login');
+                }
+                else{
+                    //Piensa a quitarlo
+                    $rootScope.accessToken = responseData.data.ret.accesToken;
+
+                    $rootScope.requestConfig = {
+                        headers: { 'Content-Type': 'application/json',
+                            'accessToken':responseData.data.ret.accesToken
+                        }
+                    };
+
+                    $timeout(function(){
+                        $location.url('/table');
+                        $rootScope.registered = true;
+                    },3000);
+
+                }
+            }
+
+            var loginError = function(error){
+                console.log("loginError");
+                console.log(error);
+            }
+
+            var login = function () {
+                var data = JSON.stringify({
+                    "username": $scope.name,
+                    "password": $scope.password
+                });
+                $http.post("https://hlmmfg.appspot.com/_ah/api/loginAPI/v1/login",data,$rootScope.requestConfig).then(loginSuccess,loginError);
+            }
 
             $scope.login = function (){
                 if (validateUsername($scope.name) !== true) {
@@ -15,38 +53,7 @@ angular.
                     $window.alert("The password doesn't match the requirements");
                     return;
                 }
-                var loginData = JSON.stringify({
-                    "username": $scope.name,
-                    "password": $scope.password
-                });
-
-                console.log(loginData);
-                //Así es como se hace una llamada asíncrona
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        var response = JSON.stringify(this.responseText);
-                        /*if (response.status === "error" && response.ret.errorMessage === "Given token is invalid or has expired") {
-                         $scope.changeView = function(){
-                         $location.path(register/register.view); //path not hash
-                         }
-                         }*/
-                        var jsonResp = JSON.parse(xhttp.responseText);
-                        console.log(JSON.parse(xhttp.responseText));
-                        $rootScope.accessToken = jsonResp.ret.accesToken;
-                        $rootScope.registered = true;
-                        $location.url('/table');
-                    }
-                    else{
-                        console.log(response);
-                    }
-                };
-                var URL = "https://hlmmfg.appspot.com/_ah/api/loginAPI/v1";
-                xhttp.open("POST", URL+"/login");
-                xhttp.setRequestHeader("content-type", "application/json");
-                xhttp.setRequestHeader("cache-control", "no-cache");
-                xhttp.send(loginData);
-
+                login();
             }
 
             $scope.create = function (){
@@ -62,11 +69,7 @@ angular.
                     $window.alert("Invalid mail address");
                 }
 
-            }
-
-            function switchFunct() {
-
-            }
+            };
 
             function validateUsername(username){
                 if (!username || username.length > 15 || username.length < 5) return false;

@@ -3,7 +3,7 @@
 // Register `phoneList` component, along with its associated controller and template
 angular.
 module('raceConditions').controller('tableController', function tableController($location,$scope,$rootScope,$timeout,$http) {
-
+        //INTERVAL
         var init = function (){
             if(!$rootScope.registered){
                 $location.url('/login');
@@ -16,58 +16,56 @@ module('raceConditions').controller('tableController', function tableController(
         var actTable = function(){
             timer = $timeout(actTable,5000);
             getTableAsync();
-            $scope.count += 1;
         }
         timer = $timeout(actTable,5000);
 
+        var getTableSuccess = function(responseData){
+            $scope.done=false;
+            console.log("getTableSuccess");
+            console.log(responseData.data);
+            if(responseData.data.status == "error"){
+                $rootScope.registered = false;
+                $location.url('/login');
+            }
+            $scope.table = responseData.data.ret;
+        }
+
+        var getTableError = function(error){
+            console.log("getTableError");
+            console.log(error);
+        }
+
         var getTableAsync= function () {
-            $scope.done=true;
             var data = JSON.stringify({
                 "tableInfoKey": "aghzfmhsbW1mZ3IWCxIJVGFibGVJbmZvGICAgICZ0oUKDA"
             });
-
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    $scope.done=false;
-                    console.log(this.responseText);
-                    var JSONResponse = JSON.parse(this.responseText);
-                    if(JSONResponse.status == "error"){
-                        $rootScope.registered = false;
-                        $location.url('/login');
-                    }
-                    $scope.table = JSONResponse.ret;
-                }
-            });
-
-            xhr.open("POST", "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable");
-            xhr.setRequestHeader("accesstoken",  $rootScope.accessToken);
-            xhr.setRequestHeader("content-type", "application/json");
-            xhr.setRequestHeader("cache-control", "no-cache");
-
-            xhr.send(data);
+            $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
         }
-
-
         getTableAsync();
-        getTableAsync();
-
-        //$scope.table = getTable();
 
         var inputChangedPromise;
         $scope.inputChanged = function(){
-
             $timeout.cancel(timer);
             if(inputChangedPromise){
                 $timeout.cancel(inputChangedPromise);
             }
             inputChangedPromise = $timeout(updateValues,3000);
-            // timer = $timeout(actTable,5000);
         }
 
-        $scope.pene;
+        var updateValuesSuccess = function(responseData){
+
+            console.log("updateValuesSuccess");
+            console.log(responseData.data);
+            if(responseData.data.status == "error"){
+                $rootScope.registered = false;
+                $location.url('/login');
+            }
+        }
+
+        var updateValuesError = function(error){
+            console.log("updateValuesError");
+            console.log(error);
+        }
 
         var  updateValues = function(){
             var data = JSON.stringify({
@@ -80,30 +78,15 @@ module('raceConditions').controller('tableController', function tableController(
                     $scope.model[$scope.id + $scope.index]
                 ]
             });
-
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    console.log(this.responseText);
-                }
-            });
-
-            xhr.open("POST", "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/modifyRow");
-            xhr.setRequestHeader("accesstoken",  $rootScope.accessToken);
-            xhr.setRequestHeader("content-type", "application/json");
-            xhr.setRequestHeader("cache-control", "no-cache");
-
-            xhr.send(data);
+            $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/modifyRow",data,$rootScope.requestConfig).then(updateValuesSuccess,updateValuesError);
         }
 
-            $scope.eEditable= -1;
-            $scope.eElement;
-            $scope.model={};
-            $scope.editing = function (id, index) {
-                $scope.id =id;
-                $scope.index =index;
-                $scope.eEditable = index;
-            }
-        });
+        $scope.eEditable= -1;
+        $scope.eElement;
+        $scope.model={};
+        $scope.editing = function (id, index) {
+            $scope.id =id;
+            $scope.index =index;
+            $scope.eEditable = index;
+        }
+    });
