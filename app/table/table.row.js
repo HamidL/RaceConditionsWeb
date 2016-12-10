@@ -45,7 +45,7 @@ module('raceConditions').controller('tableRowController', function tableControll
             if(inputChangedPromise){
                 $timeout.cancel(inputChangedPromise);
             }
-            inputChangedPromise = $timeout(updateValues,3000);
+            inputChangedPromise = $timeout(updateValues,1000);
         }
 
         var updateValuesSuccess = function(responseData){

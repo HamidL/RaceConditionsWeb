@@ -84,7 +84,7 @@
     }
 
     .glyphicon-minus{
-        padding: 5px;
+        padding: 10px;
         text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
         -webkit-border-radius: 15px;
         -moz-border-radius: 15px;
@@ -148,7 +148,19 @@
         </div>
         <div class = "col-md-6">
             <label>Add new column</label>
-        </div></div>
+            <ul ng-repeat="att in addColumnNames track by $index" id="attr">
+                <li>
+                    <input class="input-style" type="text" ng-model ="addColumnNames[$index]"/>
+                    <select class="select-style" ng-model="addColumnTypes[$index]" ng-options="x for x in attrTypes">Type</select>
+                </li>
+            </ul>
+            <button class="glyphicon glyphicon-plus" ng-click="addNewAttribute()"></button>
+            <button class="glyphicon glyphicon-minus" ng-click="delNewAttribute()"></button>
+            <div class="butCont">
+                <button class = "addButt" ng-click="addNewCol()">Add new column</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
