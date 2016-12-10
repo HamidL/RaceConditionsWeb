@@ -5,7 +5,8 @@ angular.
   module('raceConditions')
     .controller('registerController',
         function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
-
+            $rootScope.home_class = "active";
+            $rootScope.table_class = "";
             var loginSuccess = function(responseData){
                 console.log("loginSuccess");
                 console.log(responseData.data);

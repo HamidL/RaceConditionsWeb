@@ -42,6 +42,8 @@ angular.module('raceConditions')
             };
             init();
             $scope.loadTable = function(tableKey) {
+                $rootScope.home_class = "";
+                $rootScope.table_class = "active";
                 $rootScope.tableKey = tableKey;
                 $location.url('/table/modifyTable');
                 $rootScope.table = true;

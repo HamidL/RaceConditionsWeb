@@ -10,6 +10,7 @@ module.exports = function(config) {
       '**/*.module.js',
       '*!(.module|.spec).js',
       '!(bower_components)/**/*!(.module|.spec).js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       '**/*.spec.js'
     ],
 

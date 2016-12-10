@@ -1,7 +1,7 @@
 'use strict';
 
 // Define the `phonecatApp` module
-var mod = angular.module('raceConditions', ['ngRoute']);
+var mod = angular.module('raceConditions', ['ngRoute','ui.bootstrap']);
 mod.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/login', {
