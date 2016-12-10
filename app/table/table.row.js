@@ -2,7 +2,7 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-module('raceConditions').controller('tableController', function tableController($location,$scope,$rootScope,$timeout,$http) {
+module('raceConditions').controller('tableRowController', function tableController($location,$scope,$rootScope,$timeout,$http) {
         //INTERVAL
         var init = function (){
             if(!$rootScope.registered){

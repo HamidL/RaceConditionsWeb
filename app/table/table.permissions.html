@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Modify permissions</title>
 </head>
-<body>
-
+<body ng-app="raceConditions">
+    <div class="permissions">
+        <div class="readPermissions">
+            <h2>Read Permissions:</h2>
+            <div ng-repeat="user in readUsers" style="float:left">
+                {{user}} <p ng-if="!$last"> {{","}}</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

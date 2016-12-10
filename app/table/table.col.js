@@ -26,7 +26,7 @@ module('raceConditions').controller('tableColController', function tableControll
                     $rootScope.registered = false;
                     $location.url('/login');
                 }
-                $scope.table = JSONResponse.ret.;
+                $scope.table = JSONResponse.ret;
             }
         });
 
