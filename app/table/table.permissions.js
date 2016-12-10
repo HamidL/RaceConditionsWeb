@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('raceConditions')
-    .controller('tablePermissionsController', function tablePermissions($scope, $rootScope, $window, $location) {
-
+    .controller('tablePermissionsController', function tablePermissions($scope, $rootScope, $window, $location, $http) {
+            var allUsers = [];
+            var allKeys = [];
             var init = function (){
                 if(!$rootScope.registered){
                     $location.url('/login');
@@ -53,8 +54,7 @@ angular.module('raceConditions')
                          }*/
                         jsonResp = JSON.parse(xhttp.responseText).ret;
 
-                        var allUsers = [];
-                        var allKeys = [];
+
                         var i;
                         for (i = 0; i < jsonResp.length; i+=2) {
                             allUsers.push(jsonResp[i]);
@@ -75,38 +75,45 @@ angular.module('raceConditions')
             init2();
             function permisos(permiso, tipo, userKey) {
                 var URL2;
-                var data = {"tableInfoKey": $rootScope.tableKey};
+                var data = {"tableInfoKey": $rootScope.tableKey.toString()};
                 if (tipo === "add") {
-                    URL2 = "/addUserPermissions";
+                    URL2 = "/addUserPermission";
                 }
                 else {
-                    URL2 = "/removeUserPermissions";
+                    URL2 = "/removeUserPermission";
                 }
                 data.permission = permiso;
                 data.userId = userKey;
                 JSON.stringify(data);
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        var response = JSON.stringify(this.responseText);
-                        /*if (response.status === "error" && response.ret.errorMessage === "Given token is invalid or has expired") {
-                         $scope.changeView = function(){
-                         $location.path(register/register.view); //path not hash
-                         }
-                         }*/
+                var httpconfig = {
+                    headers: { 'Content-Type': 'application/json',
+                        'accessToken':$rootScope.accessToken
                     }
                 };
-
-                var URL = "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1";
-                xhttp.open("POST", URL+URL2);
-                xhttp.setRequestHeader("content-type", "application/json");
-                xhttp.setRequestHeader("cache-control", "no-cache");
-                xhttp.send(data);
+                $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1"+URL2,data,httpconfig).
+                    then(getUserTablesSuccess,getUserTablesError);
             }
             $scope.addRead = function(user) {
-                permisos("")
+                permisos("read", "add", allKeys[allUsers.indexOf(user)]);
             }
             $scope.remRead = function(user) {
-                console.log(user);
+                permisos("read", "rem", allKeys[allUsers.indexOf(user)]);
             }
+            $scope.addWrite = function(user) {
+                permisos("write", "add", allKeys[allUsers.indexOf(user)]);
+            }
+            $scope.remWrite = function(user) {
+                permisos("write", "rem", allKeys[allUsers.indexOf(user)]);
+            }
+            var getUserTablesSuccess = function(responseData){
+                console.log(responseData.data);
+                if(responseData.data.status == "error"){
+                    $rootScope.registered = false;
+                    $location.url('/login');
+                }
+                else{
+                    init();
+                }
+            }
+            var getUserTablesError = function () {}
     });
