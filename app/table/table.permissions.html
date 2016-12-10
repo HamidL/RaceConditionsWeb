@@ -8,16 +8,32 @@
     <div class="permissions">
         <div class="readPermissions" style="clear:both">
             <h3>Read Permissions:</h3>
-            <span ng-repeat="user in readUsersNames" style="float:left">
+            <p><span ng-repeat="user in readUsersNames" style="float:left">
                 {{user}} <span ng-if="!$last"> {{","}}</span>
-            </span>
-            <option ng-repeat=""> </option>
+            </span></p>
+            <div>
+            <select  ng-model="userSelected1" ng-change="changedValue(userSelected1)"
+                     data-ng-options="user for user in usernames">
+            </select>
+                <button ng-click="addRead(userSelected1)">Add</button>
+                <button ng-click="remRead(userSelected1)">Remove</button>
+            </div>
         </div>
         <div class="writePermissions" style="clear:both">
             <h3>Write Permissions:</h3>
-            <span ng-repeat="user in writeUsersNames" style="float:left">
-                {{user}} <span ng-if="!$last"> {{","}}</span>
-            </span>
+            <p>
+                <span ng-repeat="user in writeUsersNames" style="float:left">
+                    {{user}} <span ng-if="!$last"> {{","}}</span>
+                </span>
+            </p>
+                <div>
+                    <select  ng-model="userSelected2" ng-change="changedValue(userSelected2)"
+                               data-ng-options="user for user in usernames">
+                </select>
+                    <button ng-click="addWrite(userSelected2)">Add</button>
+                    <button ng-click="remWrite(userSelected2)">Remove</button>
+                </div>
+
         </div>
     </div>
 </body>

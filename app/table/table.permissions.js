@@ -27,9 +27,7 @@ angular.module('raceConditions')
                              }*/
                             jsonResp = JSON.parse(xhttp.responseText).ret;
                             $scope.readUsersNames = jsonResp.readUsersNames;
-                            console.log(jsonResp.readUsersNames);
                             $scope.writeUsersNames = jsonResp.writeUsersNames;
-                            console.log(jsonResp.writeUsersNames);
                             $scope.$apply();
                         }
                     };
@@ -43,7 +41,7 @@ angular.module('raceConditions')
                 }
             };
             init();
-            var init = function() {
+            var init2 = function() {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState === 4 && this.status === 200) {
@@ -54,11 +52,16 @@ angular.module('raceConditions')
                          }
                          }*/
                         jsonResp = JSON.parse(xhttp.responseText).ret;
-                        var allUsers = {};
-                        var allKeys = {};
-                        for (var i = 0; i < jsonResp.length(); i+=2) {
-                            allUsers += jsonResp;
+
+                        var allUsers = [];
+                        var allKeys = [];
+                        var i;
+                        for (i = 0; i < jsonResp.length; i+=2) {
+                            allUsers.push(jsonResp[i]);
+                            allKeys.push(jsonResp[i+1]);
                         }
+                        $scope.usernames = allUsers;
+                        $scope.keys = allKeys;
                         $scope.$apply();
                     }
                 };
@@ -69,4 +72,39 @@ angular.module('raceConditions')
                 xhttp.setRequestHeader("cache-control", "no-cache");
                 xhttp.send(data);
             }
-        });
+            init2();
+            function permisos(permiso, tipo) {
+                var URL2;
+                var data = {"tableInfoKey": $rootScope.tableKey};
+                if (tipo === "add") {
+                    URL2 = "/addUserPermissions";
+                }
+                else {
+                    URL2 = "/removeUserPermissions";
+                }
+                data.permission = permiso;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var response = JSON.stringify(this.responseText);
+                        /*if (response.status === "error" && response.ret.errorMessage === "Given token is invalid or has expired") {
+                         $scope.changeView = function(){
+                         $location.path(register/register.view); //path not hash
+                         }
+                         }*/
+                    }
+                };
+
+                var URL = "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1";
+                xhttp.open("POST", URL+URL2);
+                xhttp.setRequestHeader("content-type", "application/json");
+                xhttp.setRequestHeader("cache-control", "no-cache");
+                xhttp.send(data);
+            }
+            $scope.addRead = function(user) {
+
+            }
+            $scope.remRead = function(user) {
+                console.log(user);
+            }
+    });
