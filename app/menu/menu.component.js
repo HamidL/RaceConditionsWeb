@@ -6,18 +6,6 @@ angular.module('raceConditions')
 
             $rootScope.selectedTable=false;
 
-            var init = function () {
-                if ($rootScope.token === null) {
-                    $window.alert("You need to login first in order to see your created tables");
-                    $location.url('/login');
-                }
-                else {
-                    getUserTables();
-                }
-            };
-
-            init();
-
             var getUserTablesSuccess = function(responseData){
                 if(responseData.data.status == "error"){
                     $location.url('/login');
@@ -32,7 +20,7 @@ angular.module('raceConditions')
                 $location.url('/login');
             };
 
-            var getUserTables=function(){
+            var getUserTables = function(){
                 var data={};
                 $http.post($rootScope.RCURL+"/tableAPI/v1/getUserTables",data,$rootScope.requestConfig).then(getUserTablesSuccess,getUserTablesError);
             };
@@ -89,4 +77,18 @@ angular.module('raceConditions')
             $scope.createTable = function () {
                 $http.post($rootScope.RCURL+"/tableAPI/v1/createTable",$scope.newTable,$rootScope.requestConfig).then(createTableSuccess,createTableError);
             };
+
+
+
+            var init = function () {
+                if ($rootScope.token === null) {
+                    $window.alert("You need to login first in order to see your created tables");
+                    $location.url('/login');
+                }
+                else {
+                    getUserTables();
+                }
+            };
+
+            init();
         });

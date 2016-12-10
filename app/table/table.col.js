@@ -7,7 +7,7 @@ module('raceConditions').controller('tableColController', function tableControll
         if(!$rootScope.registered){
             $location.url('/login');
         }
-    }
+    };
     init();
 
     var timer;
@@ -23,12 +23,12 @@ module('raceConditions').controller('tableColController', function tableControll
             $location.url('/login');
         }
         $scope.table = responseData.data.ret;
-    }
+    };
 
     var getTableError = function(error){
         console.log("getTableError");
         console.log(error);
-    }
+    };
 
     var getTableAsync= function () {
         var data = JSON.stringify({
@@ -48,13 +48,13 @@ module('raceConditions').controller('tableColController', function tableControll
             $location.url('/login');
         }
         getTableAsync();
-    }
+    };
 
 
     var addNewRowError = function(error){
         console.log("getTableError");
         console.log(error);
-    }
+    };
 
     $scope.addNewRow = function(){
         var data ={
@@ -69,8 +69,7 @@ module('raceConditions').controller('tableColController', function tableControll
             }
         }
         $http.post($rootScope.RCURL+"/tableAPI/v1/addNewRow",data,$rootScope.requestConfig).then(addNewRowSuccess,addNewRowError);
-
-    }
+    };
 
 
     $scope.attrTypes = ["Integer","Double","Date","String","Boolean"];
@@ -98,13 +97,13 @@ module('raceConditions').controller('tableColController', function tableControll
             $location.url('/login');
         }
         getTableAsync();
-    }
+    };
 
 
     var addNewColError = function(error){
         console.log("addNewColError");
         console.log(error);
-    }
+    };
 
     $scope.addNewCol = function(){
         var data ={
@@ -112,9 +111,7 @@ module('raceConditions').controller('tableColController', function tableControll
             "columnNames":$scope.addColumnNames,
             "columnTypes":$scope.addColumnTypes
         };
-        console.log(data);
         $http.post($rootScope.RCURL+"/tableAPI/v1/addColumnProperties",data,$rootScope.requestConfig).then(addNewColSuccess,addNewColError);
-
     }
 
 });

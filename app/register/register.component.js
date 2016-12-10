@@ -72,7 +72,6 @@ angular.
                     $window.alert("Invalid mail address");
                 }
                 newUser();
-
             };
 
             var newUserSuccess = function(responseData){
