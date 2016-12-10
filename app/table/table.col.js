@@ -34,7 +34,7 @@ module('raceConditions').controller('tableColController', function tableControll
         var data = JSON.stringify({
             "tableInfoKey": $rootScope.tableKey
         });
-        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
+        $http.post($rootScope.RCURL+"/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
     };
     getTableAsync();
 
@@ -68,7 +68,7 @@ module('raceConditions').controller('tableColController', function tableControll
                 data.columnValues.push($scope.newRowColumnValues[i]);
             }
         }
-        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/addNewRow",data,$rootScope.requestConfig).then(addNewRowSuccess,addNewRowError);
+        $http.post($rootScope.RCURL+"/tableAPI/v1/addNewRow",data,$rootScope.requestConfig).then(addNewRowSuccess,addNewRowError);
 
     }
 
@@ -113,7 +113,7 @@ module('raceConditions').controller('tableColController', function tableControll
             "columnTypes":$scope.addColumnTypes
         };
         console.log(data);
-        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/addColumnProperties",data,$rootScope.requestConfig).then(addNewColSuccess,addNewColError);
+        $http.post($rootScope.RCURL+"/tableAPI/v1/addColumnProperties",data,$rootScope.requestConfig).then(addNewColSuccess,addNewColError);
 
     }
 

@@ -41,7 +41,7 @@ angular.module('raceConditions')
                 var data={
 
                 }
-                $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getUserTables",data,$rootScope.requestConfig).then(getUserTablesSuccess,getUserTablesError);
+                $http.post($rootScope.RCURL+"/tableAPI/v1/getUserTables",data,$rootScope.requestConfig).then(getUserTablesSuccess,getUserTablesError);
 
             }
 
@@ -98,6 +98,6 @@ angular.module('raceConditions')
             }
 
             $scope.createTable = function () {
-                $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/createTable",$scope.newTable,$rootScope.requestConfig).then(createTableSuccess,createTableError);
+                $http.post($rootScope.RCURL+"/tableAPI/v1/createTable",$scope.newTable,$rootScope.requestConfig).then(createTableSuccess,createTableError);
             };
         });

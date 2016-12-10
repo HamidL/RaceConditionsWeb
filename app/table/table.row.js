@@ -35,7 +35,7 @@ module('raceConditions').controller('tableRowController', function tableControll
             var data = JSON.stringify({
                 "tableInfoKey": $rootScope.tableKey
             });
-            $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
+            $http.post($rootScope.RCURL+"/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
         }
         getTableAsync();
 
@@ -75,7 +75,7 @@ module('raceConditions').controller('tableRowController', function tableControll
                     $scope.model[$scope.id + $scope.index]
                 ]
             });
-            $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/modifyRow",data,$rootScope.requestConfig).then(updateValuesSuccess,updateValuesError);
+            $http.post($rootScope.RCURL+"/tableAPI/v1/modifyRow",data,$rootScope.requestConfig).then(updateValuesSuccess,updateValuesError);
         }
 
         $scope.eEditable= -1;

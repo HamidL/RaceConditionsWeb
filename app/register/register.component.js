@@ -5,6 +5,8 @@ angular.
   module('raceConditions')
     .controller('registerController',
         function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
+            $rootScope.RCURL="https://hlmmfg.appspot.com/_ah/api";
+
             var loginSuccess = function(responseData){
                 console.log("loginSuccess");
                 console.log(responseData.data);
@@ -40,7 +42,7 @@ angular.
                     "username": $scope.name,
                     "password": $scope.password
                 });
-                $http.post("https://hlmmfg.appspot.com/_ah/api/loginAPI/v1/login",data,$rootScope.requestConfig).then(loginSuccess,loginError);
+                $http.post($rootScope.RCURL+"/loginAPI/v1/login",data,$rootScope.requestConfig).then(loginSuccess,loginError);
             };
 
             $scope.login = function (){
@@ -95,7 +97,7 @@ angular.
                     "username": $scope.userReg,
                     "password": $scope.passReg
                 });
-                $http.post("https://hlmmfg.appspot.com/_ah/api/loginAPI/v1/newUser",data,$rootScope.requestConfig).then(newUserSuccess,newUserError);
+                $http.post($rootScope.RCURL+"/loginAPI/v1/newUser",data,$rootScope.requestConfig).then(newUserSuccess,newUserError);
             };
 
             function validateUsername(username){
