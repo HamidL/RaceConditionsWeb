@@ -36,7 +36,7 @@
     <table class="race-table">
         <table border="1px solid black">
             <tr>
-                <th ng-repeat="columnHeader in table.columnNames">
+                <th ng-repeat="columnHeader in table.columnNames track by $index">
                     {{columnHeader}}
                 </th>
             </tr>
@@ -49,10 +49,6 @@
 
         </table>
     </table>
-</div>
-<div>
-    <button>Add new row </button>
-    <button>Add new column</button>
 </div>
 </body>
 </html>

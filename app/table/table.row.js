@@ -2,7 +2,7 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-module('raceConditions').controller('tableRowController', function tableController($location,$scope,$rootScope,$timeout,$http) {
+module('raceConditions').controller('tableRowController', function tableController($location,$scope,$rootScope,$timeout,$interval,$http) {
         //INTERVAL
         var init = function (){
             if(!$rootScope.registered){
@@ -13,11 +13,7 @@ module('raceConditions').controller('tableRowController', function tableControll
 
         var timer;
         $scope.count = 0;
-        var actTable = function(){
-            timer = $timeout(actTable,5000);
-            getTableAsync();
-        }
-        timer = $timeout(actTable,5000);
+        timer = $interval(getTableAsync,2500);
 
         var getTableSuccess = function(responseData){
             $scope.done=false;
@@ -45,7 +41,7 @@ module('raceConditions').controller('tableRowController', function tableControll
 
         var inputChangedPromise;
         $scope.inputChanged = function(){
-            $timeout.cancel(timer);
+            $interval.cancel(timer);
             if(inputChangedPromise){
                 $timeout.cancel(inputChangedPromise);
             }
@@ -60,6 +56,7 @@ module('raceConditions').controller('tableRowController', function tableControll
                 $rootScope.registered = false;
                 $location.url('/login');
             }
+            timer = $interval(getTableAsync,2500);
         }
 
         var updateValuesError = function(error){
