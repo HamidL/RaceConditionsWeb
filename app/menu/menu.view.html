@@ -5,17 +5,110 @@
     <title>Main menu</title>
 </head>
 <style>
-    .uib-col-sm-4 {
-        margin-left: 15px;
-        margin-top: 15px;
+    .row {
+
+        padding-left: 15px;
+        padding-top: 15px;
     }
-    .uib-col-sm-8{
-        margin-left: 15px;
-        margin-top: 15px;
+    .createContainer{
+        padding-left: 100px;
     }
-    .uib-list-group-item{
-        margin-top: -5px;
-        margin-left: -5px;
+    .col-sm-4 {
+        padding-left: 15px;
+    }
+    .col-sm-8{
+        padding-left: 175px;
+    }
+    .lab{
+        padding-left: 150px;
+    }
+    .list-group-item{
+        padding-left: -5px;
+    }
+
+    .select-style {
+        border: 1px solid #ccc;
+        width: auto;
+        height: 30px;
+        border-radius: 3px;
+        overflow: hidden;
+        background: #fafafa no-repeat 90% 50%;
+    }
+
+    .select-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .select-style select:focus {
+        outline: none;
+    }
+
+    .input-style {
+        border: 1px solid #ccc;
+        width: auto;
+        height: 30px;
+        border-radius: 3px;
+        overflow: hidden;
+        background: #fafafa no-repeat 90% 50%;
+    }
+
+    .input-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .input-style select:focus {
+        outline: none;
+    }
+
+    .glyphicon-plus{
+        padding: 10px;
+        text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: rgb(20, 255, 20);
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .glyphicon-minus{
+        padding: 10px;
+        text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: rgb(255, 20, 20);
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .createButt{
+        padding: 10px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .butCont{
+        padding: 100px;
+        padding-top:25px;
     }
 
 </style>
@@ -28,24 +121,27 @@
             </div>
         </div>
 
-        <div class="col-sm-8">
-            <div class="tableCreate">
+        <label class = "lab" for="create">Create table</label>
+        <div class="col-sm-8" id ="create">
+            <div class="tableCreate" >
                 <label for="tabName">Table name:</label>
-                <input class="itext" type="text" ng-model = "newTable.tableName" id="tabName"/>
+                <input class="input-style" type="text" ng-model = "newTable.tableName" id="tabName"/>
             </div>
             <div>
-                <label for="attr">Attributes</label>
+                <label for="attr">Attributes:</label>
                 <ul ng-repeat="att in newTable.columnNames track by $index" id="attr">
                     <li>
-                        <input class="itext" type="text" ng-model ="newTable.columnNames[$index]"/>
-                        <select ng-model="newTable.columnTypes[$index]" ng-options="x for x in attrTypes">Type</select>
+                        <input class="input-style" type="text" ng-model ="newTable.columnNames[$index]"/>
+                        <select class="select-style" ng-model="newTable.columnTypes[$index]" ng-options="x for x in attrTypes">Type</select>
                     </li>
                 </ul>
                 <button class="glyphicon glyphicon-plus" ng-click="addNewAttribute()"></button>
                 <button class="glyphicon glyphicon-minus" ng-click="delNewAttribute()"></button>
 
             </div>
-            <button ng-click="createTable()">Create new table</button>
+            <div class="butCont">
+            <button class = "createButt" ng-click="createTable()">Create new table</button>
+            </div>
         </div>
     </div>
 </body>

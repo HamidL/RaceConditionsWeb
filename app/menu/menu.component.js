@@ -62,10 +62,9 @@ angular.module('raceConditions')
             }
 
             $scope.delNewAttribute = function(){
-                if($scope.newTable.columnNames.size == 1){
+                if($scope.newTable.columnNames.length != 1){
                     $scope.newTable.columnNames.pop();
                     $scope.newTable.columnTypes.pop();
-                    addNewAttribute();
                 }
             }
 
