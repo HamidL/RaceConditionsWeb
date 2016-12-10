@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('raceConditions')
-    .controller('tablePermissionsController',
-        function menuController($scope, $rootScope, $window, $location) {
+    .controller('tablePermissionsController', function tablePermissions($scope, $rootScope, $window, $location) {
 
             var init = function (){
                 if(!$rootScope.registered){
@@ -28,11 +27,13 @@ angular.module('raceConditions')
                              }*/
                             jsonResp = JSON.parse(xhttp.responseText).ret;
                             $scope.readUsers = jsonResp.readUsers;
+                            console.log(jsonResp.readUsers);
                             $scope.writeUsers = jsonResp.writeUsers;
+                            console.log(jsonResp.writeUsers);
                             $scope.$apply();
                         }
                     };
-                    var tableData = {"tableInfoKey": $rootScope.tableKey};
+                    var tableData = JSON.stringify({"tableInfoKey": $rootScope.tableKey});
                     var URL = "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1";
                     xhttp.open("POST", URL+"/getTableInfo");
                     xhttp.setRequestHeader("content-type", "application/json");
