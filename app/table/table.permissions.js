@@ -43,4 +43,30 @@ angular.module('raceConditions')
                 }
             };
             init();
+            var init = function() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var response = JSON.stringify(this.responseText);
+                        /*if (response.status === "error" && response.ret.errorMessage === "Given token is invalid or has expired") {
+                         $scope.changeView = function(){
+                         $location.path(register/register.view); //path not hash
+                         }
+                         }*/
+                        jsonResp = JSON.parse(xhttp.responseText).ret;
+                        var allUsers = {};
+                        var allKeys = {};
+                        for (i = 0; i < jsonResp.length(); i+=2) {
+                            allUsers += jsonResp.
+                        }
+                        $scope.$apply();
+                    }
+                };
+                var data = "";
+                var URL = "https://hlmmfg.appspot.com/_ah/api/usersAPI/v1";
+                xhttp.open("POST", URL+"/getAllUsers");
+                xhttp.setRequestHeader("content-type", "application/json");
+                xhttp.setRequestHeader("cache-control", "no-cache");
+                xhttp.send(data);
+            }
         });

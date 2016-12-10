@@ -6,18 +6,18 @@
 </head>
 <body>
     <div class="permissions">
-        <div class="readPermissions">
-            <h2>Read Permissions:</h2>
-            <p ng-repeat="user in readUsersNames" style="float:left">
+        <div class="readPermissions" style="clear:both">
+            <h3>Read Permissions:</h3>
+            <span ng-repeat="user in readUsersNames" style="float:left">
                 {{user}} <span ng-if="!$last"> {{","}}</span>
-            </p>
-            <br>
+            </span>
+            <option ng-repeat=""> </option>
         </div>
-        <div class="writePermissions">
-            <h2>Write Permissions:</h2>
-            <p ng-repeat="user in writeUsersNames" style="float:left">
+        <div class="writePermissions" style="clear:both">
+            <h3>Write Permissions:</h3>
+            <span ng-repeat="user in writeUsersNames" style="float:left">
                 {{user}} <span ng-if="!$last"> {{","}}</span>
-            </p>
+            </span>
         </div>
     </div>
 </body>
