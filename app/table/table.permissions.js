@@ -72,7 +72,7 @@ angular.module('raceConditions')
                 xhttp.send(data);
             }
             init2();
-            function permisos(permiso, tipo) {
+            function permisos(permiso, tipo, userKey) {
                 var URL2;
                 var data = {"tableInfoKey": $rootScope.tableKey};
                 if (tipo === "add") {
@@ -82,6 +82,8 @@ angular.module('raceConditions')
                     URL2 = "/removeUserPermissions";
                 }
                 data.permission = permiso;
+                data.userId = userKey;
+                JSON.stringify(data);
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState === 4 && this.status === 200) {
@@ -101,7 +103,7 @@ angular.module('raceConditions')
                 xhttp.send(data);
             }
             $scope.addRead = function(user) {
-
+                permisos("")
             }
             $scope.remRead = function(user) {
                 console.log(user);
