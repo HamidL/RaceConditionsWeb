@@ -31,11 +31,13 @@
 </head>
 <body>
     <div class="permissions">
-        <div class="readPermissions" style="clear:both">
+        <div class="readPermissions" style="clear:both; padding-left:20px">
             <h3>Read Permissions:</h3>
-            <p><span ng-repeat="user in readUsersNames" style="float:left">
-                {{user}} <span ng-if="!$last"> {{","}}</span>
-            </span></p>
+            <div>
+            <ul ng-repeat="user in readUsersNames">
+                <li>{{user}}</li>
+            </ul>
+            </div>
             <div>
             <select  ng-model="userSelected1" ng-change="changedValue(userSelected1)"
                      data-ng-options="user for user in usernames">
@@ -44,13 +46,11 @@
                 <button class="glyphicon glyphicon-minus" ng-click="remRead(userSelected1)"></button>
             </div>
         </div>
-        <div class="writePermissions" style="clear:both">
+        <div class="writePermissions" style="clear:both; padding-left:20px">
             <h3>Write Permissions:</h3>
-            <p>
-                <span ng-repeat="user in writeUsersNames" style="float:left">
-                    {{user}} <span ng-if="!$last"> {{","}}</span>
-                </span>
-            </p>
+                <ul ng-repeat="user in writeUsersNames">
+                    <li>{{user}}</li>
+                </ul>
                 <div>
                     <select  ng-model="userSelected2" ng-change="changedValue(userSelected2)"
                                data-ng-options="user for user in usernames">
