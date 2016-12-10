@@ -72,4 +72,49 @@ module('raceConditions').controller('tableColController', function tableControll
 
     }
 
+
+    $scope.attrTypes = ["Integer","Double","Date","String","Boolean"];
+
+    $scope.addColumnNames=[""];
+    $scope.addColumnTypes=[""];
+
+    $scope.addNewAttribute = function(){
+        $scope.addColumnNames.push("");
+        $scope.addColumnTypes.push("");
+    };
+
+    $scope.delNewAttribute = function(){
+        if($scope.addColumnNames != 1){
+            $scope.addColumnNames.pop();
+            $scope.addColumnTypes.pop();
+        }
+    };
+
+    var addNewColSuccess= function(responseData){
+        console.log("addNewColSuccess");
+        console.log(responseData.data);
+        if(responseData.data.status == "error"){
+            $rootScope.registered = false;
+            $location.url('/login');
+        }
+        getTableAsync();
+    }
+
+
+    var addNewColError = function(error){
+        console.log("addNewColError");
+        console.log(error);
+    }
+
+    $scope.addNewCol = function(){
+        var data ={
+            "tableInfoKey": $rootScope.tableKey,
+            "columnNames":$scope.addColumnNames,
+            "columnTypes":$scope.addColumnTypes
+        };
+        console.log(data);
+        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/addColumnProperties",data,$rootScope.requestConfig).then(addNewColSuccess,addNewColError);
+
+    }
+
 });

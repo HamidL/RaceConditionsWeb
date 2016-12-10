@@ -64,14 +64,14 @@ angular.module('raceConditions')
             $scope.addNewAttribute = function(){
                 $scope.newTable.columnNames.push("");
                 $scope.newTable.columnTypes.push("");
-            }
+            };
 
             $scope.delNewAttribute = function(){
                 if($scope.newTable.columnNames.length != 1){
                     $scope.newTable.columnNames.pop();
                     $scope.newTable.columnTypes.pop();
                 }
-            }
+            };
 
             $scope.attrTypes = ["Integer","Double","Date","String","Boolean"];
 
