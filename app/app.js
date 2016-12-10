@@ -13,7 +13,7 @@ mod.config(['$routeProvider', function($routeProvider) {
             controller: 'menuController'
         })
         .when('/table/modifyTable', {
-            templateUrl: 'table/table.view.html',
+            templateUrl: 'table/table.row.html',
             controller: 'tableRowController'
         })
         .when('/table/modifyCol', {
