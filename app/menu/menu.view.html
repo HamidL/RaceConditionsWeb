@@ -17,34 +17,35 @@
         margin-top: -5px;
         margin-left: -5px;
     }
+
 </style>
 <body ng-app="raceConditions">
     <div class="row">
         <div class="col-sm-4">
-            <h2>Available tables</h2>
-            <div class="list-group" ng-repeat="table in tables" ng-click="loadTable(table.id)">
+            <label for="avTabl">Available tables</label>
+            <div class="list-group" ng-repeat="table in tables" ng-click="loadTable(table.id)" id="avTabl">
                 <p class="list-group-item">{{table.realName}}</p>
             </div>
         </div>
 
         <div class="col-sm-8">
             <div class="tableCreate">
-                Table name: <input type="text" ng-model = "newTable.tableName"/>
+                <label for="tabName">Table name:</label>
+                <input class="itext" type="text" ng-model = "newTable.tableName" id="tabName"/>
             </div>
             <div>
-                <h>Attributes</h>
-                <ul ng-repeat="att in newTable.attributes">
+                <label for="attr">Attributes</label>
+                <ul ng-repeat="att in newTable.columnNames track by $index" id="attr">
                     <li>
-                        <input type="text" ng-model ="newTable.attributes[$index].name"/>
-                        <select ng-model="newTable.attributes[$index].type" ng-options="x for x in attrTypes">Type</select>
+                        <input class="itext" type="text" ng-model ="newTable.columnNames[$index]"/>
+                        <select ng-model="newTable.columnTypes[$index]" ng-options="x for x in attrTypes">Type</select>
                     </li>
                 </ul>
                 <button class="glyphicon glyphicon-plus" ng-click="addNewAttribute()"></button>
                 <button class="glyphicon glyphicon-minus" ng-click="delNewAttribute()"></button>
 
             </div>
-            <button>Create new table</button>
-            {{newTable}}
+            <button ng-click="createTable()">Create new table</button>
         </div>
     </div>
 </body>

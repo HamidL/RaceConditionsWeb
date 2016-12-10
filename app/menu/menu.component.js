@@ -2,7 +2,7 @@
 
 angular.module('raceConditions')
     .controller('menuController',
-        function menuController($scope, $rootScope, $window, $location) {
+        function menuController($http, $scope, $rootScope, $window, $location) {
             $rootScope.selectedTable=false;
             var init = function (){
                 if(!$rootScope.registered){
@@ -52,29 +52,48 @@ angular.module('raceConditions')
 
             $scope.newTable={
                 tableName:"",
-                attributes:[
-                    {
-                        name: "",
-                        type: ""
-                    }
-                ]
-            }
+                columnNames:[""],
+                columnTypes:[""]
+            };
 
             $scope.addNewAttribute = function(){
-                var attribute=
-                {
-                    name: "",
-                    type: ""
-                };
-                $scope.newTable.attributes.push(attribute);
+                $scope.newTable.columnNames.push("");
+                $scope.newTable.columnTypes.push("");
             }
 
             $scope.delNewAttribute = function(){
-                $scope.newTable.attributes.pop();
-                if($scope.newTable.attributes.size == 1){
-                    $scope.newTable.attributes.push(attribute);
+                if($scope.newTable.columnNames.size == 1){
+                    $scope.newTable.columnNames.pop();
+                    $scope.newTable.columnTypes.pop();
+                    addNewAttribute();
                 }
             }
 
-            $scope.attrTypes = ["Integer","Double","Date","String","Boolean"]
+            $scope.attrTypes = ["Integer","Double","Date","String","Boolean"];
+
+            var createTableSuccess = function(responseData){
+                console.log("createTableSuccess");
+                console.log(responseData.data);
+                if(responseData.data.status == "error"){
+                    $rootScope.registered = false;
+                    //$location.url('/login');
+                }
+                else{
+                    $scope.newTable={
+                        tableName:"",
+                        columnNames:[""],
+                        columnTypes:[""]
+                    };
+                    init();
+                }
+            }
+
+            var createTableError = function(error){
+                console.log("createTableError");
+                console.log(error);
+            }
+
+            $scope.createTable = function () {
+                $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/createTable",$scope.newTable,$rootScope.requestConfig).then(createTableSuccess,createTableError);
+            };
         });
