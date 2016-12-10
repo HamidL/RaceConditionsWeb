@@ -23,11 +23,19 @@
         li a:hover {
             background-color: #111;
         }
+
     </style>
     <div ng-hide="!registered">
         <ul class="ul-bar">
             <li class = "li-bar"><a href="#/login">LogOut</a></li>
             <li><a href="#/mainMenu">Main menu</a></li>
+        </ul>
+    </div>
+    <div ng-hide="!table">
+        <ul class="table-bar-ul">
+            <li class = "table-bar-li"><a href="#/modifyTable">Modify table</a></li>
+            <li><a href="#/modifyRow">Modify row</a></li>
+            <li><a href="#/modifyPermissions">Modify permissions</a></li>
         </ul>
     </div>
 </div>

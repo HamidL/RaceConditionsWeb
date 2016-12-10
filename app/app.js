@@ -12,9 +12,17 @@ mod.config(['$routeProvider', function($routeProvider) {
             templateUrl: 'menu/menu.view.html',
             controller: 'menuController'
         })
-        .when('/table', {
+        .when('/table/modifyTable', {
             templateUrl: 'table/table.view.html',
-            controller: 'tableController'
+            controller: 'tableRowController'
+        })
+        .when('/table/modifyCol', {
+            templateUrl: 'table/table.col.html',
+            controller: 'tableColController'
+        })
+        .when('/table/modifyPermissions', {
+            templateUrl: 'table/table.permissions.html',
+            controller: 'tablePermissionsController'
         })
         .otherwise({
             redirectTo: '/login'
