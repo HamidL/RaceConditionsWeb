@@ -23,10 +23,10 @@ angular.
                         }
                     };
 
-                    $timeout(function(){
-                        $location.url('/table');
+                   // $timeout(function(){
+                        $location.url('/mainMenu');
                         $rootScope.registered = true;
-                    },3000);
+                   // },3000);
 
                 }
             }

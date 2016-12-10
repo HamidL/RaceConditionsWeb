@@ -4,13 +4,32 @@
     <meta charset="UTF-8">
     <title>Main menu</title>
 </head>
+<style>
+    .col-sm-4 {
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+    .col-sm-8{
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+    .list-group-item{
+        margin-top: -5px;
+        margin-left: -5px;
+    }
+</style>
 <body ng-app="raceConditions">
-    <div class="menu-page">
-        <ul ng-repeat="table in tables" ng-click="loadTable(table.id)">
-            <li>
-                {{table.tableName}}
-            </li>
-        </ul>
+    <div class="row">
+        <div class="col-sm-4">
+            <h2>Available tables</h2>
+            <div class="list-group" ng-repeat="table in tables" ng-click="loadTable(table.id)">
+                <p class="list-group-item">{{table.realName}}</p>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <button>Create new table</button>
+        </div>
     </div>
 </body>
 </html>

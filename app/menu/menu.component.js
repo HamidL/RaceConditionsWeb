@@ -3,6 +3,14 @@
 angular.module('raceConditions')
     .controller('menuController',
         function menuController($scope, $rootScope, $window, $location) {
+
+            var init = function (){
+                if(!$rootScope.registered){
+                    $location.url('/login');
+                }
+            }
+            init();
+
             var jsonResp;
             var init = function () {
                 if ($rootScope.token === null) {
