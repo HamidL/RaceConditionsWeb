@@ -5,17 +5,21 @@ angular.
   module('raceConditions')
     .controller('registerController',
         function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
+
+            var init = function () {
+                $rootScope.registered = false;
+                $scope.hasUsername = true;
+            };
+            init();
+
             $rootScope.RCURL="https://hlmmfg.appspot.com/_ah/api";
 
             var loginSuccess = function(responseData){
-                console.log("loginSuccess");
-                console.log(responseData.data);
                 if(responseData.data.status == "error"){
                     $rootScope.registered = false;
                     $location.url('/login');
                 }
                 else{
-                    //Piensa a quitarlo
                     $rootScope.accessToken = responseData.data.ret.accesToken;
 
                     $rootScope.requestConfig = {
@@ -24,18 +28,16 @@ angular.
                         }
                     };
 
-                   // $timeout(function(){
-                        $location.url('/mainMenu');
-                        $rootScope.registered = true;
-                   // },3000);
+                    $location.url('/mainMenu');
+                    $rootScope.registered = true;
 
                 }
-            }
+            };
 
             var loginError = function(error){
-                console.log("loginError");
-                console.log(error);
-            }
+                $window.alert("An error has ocurred during the execution");
+                $location.url('/login');
+            };
 
             var login = function () {
                 var data = JSON.stringify({
@@ -55,7 +57,7 @@ angular.
                     return;
                 }
                 login();
-            }
+            };
 
             $scope.create = function (){
                 if (validateUsername($scope.userReg) !== true) {
@@ -74,8 +76,6 @@ angular.
             };
 
             var newUserSuccess = function(responseData){
-                console.log("newUserSuccess");
-                console.log(responseData.data);
                 if(responseData.data.status == "error"){
                     $rootScope.registered = false;
                     $scope.hasUsername = false;
@@ -85,12 +85,12 @@ angular.
                     $scope.hasUsername = true;
                     $location.url('/login');
                 }
-            }
+            };
 
             var newUserError = function(error){
-                console.log("newUserError");
-                console.log(error);
-            }
+                $window.alert("An error has ocurred during the execution");
+                $location.url('/login');
+            };
 
             var newUser = function () {
                 var data = JSON.stringify({
@@ -109,6 +109,7 @@ angular.
                 if (!password || password.length > 20 || password.length < 6) return false;
                 return /^\w+$/.test(password);
             }
+
             function validateMail(mail){
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(mail);
@@ -116,10 +117,5 @@ angular.
 
             $scope.changeHasUsername = function(){
                 $scope.hasUsername = !$scope.hasUsername;
-            }
-            var init = function () {
-                $rootScope.registered = false;
-                $scope.hasUsername = true;
             };
-            init();
 });

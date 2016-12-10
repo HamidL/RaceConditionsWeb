@@ -5,8 +5,10 @@ angular.
   module('raceConditions')
     .controller('headerController',
         function headerController($scope, $rootScope) {
+
             $rootScope.home_class = "active";
             $rootScope.table_class = "";
+
             $rootScope.changeActive = function (op){
                 console.log("Change " + op);
                 if(op == 1){
