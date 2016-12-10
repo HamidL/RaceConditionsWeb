@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html >
 <head>
     <meta charset="UTF-8">
     <title>Modify permissions</title>
 </head>
-<body ng-app="raceConditions">
+<body>
     <div class="permissions">
         <div class="readPermissions">
             <h2>Read Permissions:</h2>
             <div ng-repeat="user in readUsers" style="float:left">
+                {{user}} <p ng-if="!$last"> {{","}}</p>
+            </div>
+        </div>
+        <div class="writePermissions">
+            <h2>Write Permissions:</h2>
+            <div ng-repeat="user in writeUsers" style="float:left">
                 {{user}} <p ng-if="!$last"> {{","}}</p>
             </div>
         </div>
