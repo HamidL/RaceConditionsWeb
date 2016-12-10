@@ -56,8 +56,8 @@ angular.module('raceConditions')
                         jsonResp = JSON.parse(xhttp.responseText).ret;
                         var allUsers = {};
                         var allKeys = {};
-                        for (i = 0; i < jsonResp.length(); i+=2) {
-                            allUsers += jsonResp.
+                        for (var i = 0; i < jsonResp.length(); i+=2) {
+                            allUsers += jsonResp;
                         }
                         $scope.$apply();
                     }
