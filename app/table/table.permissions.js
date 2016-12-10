@@ -52,6 +52,7 @@ angular.module('raceConditions')
                          }
                          }*/
                         jsonResp = JSON.parse(xhttp.responseText).ret;
+
                         var allUsers = [];
                         var allKeys = [];
                         var i;

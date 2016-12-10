@@ -2,95 +2,74 @@
 
 // Register `phoneList` component, along with its associated controller and template
 angular.
-module('raceConditions').controller('tableColController', function tableController($scope) {
-
-    var init = function () {
-        $rootScope.col = true;
+module('raceConditions').controller('tableColController', function tableController($rootScope,$scope,$interval,$location,$http) {
+    var init = function (){
+        if(!$rootScope.registered){
+            $location.url('/login');
+        }
     }
     init();
-        var getTableAsync= function () {
-        $scope.done = true;
+
+    var timer;
+    $scope.count = 0;
+    timer = $interval(getTableAsync,2500);
+
+    var getTableSuccess = function(responseData){
+        $scope.done=false;
+        console.log("getTableSuccess");
+        console.log(responseData.data);
+        if(responseData.data.status == "error"){
+            $rootScope.registered = false;
+            $location.url('/login');
+        }
+        $scope.table = responseData.data.ret;
+    }
+
+    var getTableError = function(error){
+        console.log("getTableError");
+        console.log(error);
+    }
+
+    var getTableAsync= function () {
         var data = JSON.stringify({
             "tableInfoKey": $rootScope.tableKey
         });
-
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                $scope.done=false;
-                console.log(this.responseText);
-                var JSONResponse = JSON.parse(this.responseText);
-                if(JSONResponse.status == "error"){
-                    $rootScope.registered = false;
-                    $location.url('/login');
-                }
-                $scope.table = JSONResponse.ret;
-            }
-        });
-
-        xhr.open("POST", "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable");
-        xhr.setRequestHeader("accesstoken",  $rootScope.accessToken);
-        xhr.setRequestHeader("content-type", "application/json");
-        xhr.setRequestHeader("cache-control", "no-cache");
-        xhr.send(data);
-    }
-
-
-    getTableAsync();
+        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/getTable",data,$rootScope.requestConfig).then(getTableSuccess,getTableError);
+    };
     getTableAsync();
 
-    //$scope.table = getTable();
+    $scope.newRowColumnValues=[];
 
-    var inputChangedPromise;
-    $scope.inputChanged = function(){
-
-        $timeout.cancel(timer);
-        if(inputChangedPromise){
-            $timeout.cancel(inputChangedPromise);
+    var addNewRowSuccess= function(responseData){
+        console.log("addNewRowSuccess");
+        console.log(responseData.data);
+        if(responseData.data.status == "error"){
+            $rootScope.registered = false;
+            $location.url('/login');
         }
-        inputChangedPromise = $timeout(updateValues,3000);
-        // timer = $timeout(actTable,5000);
+        getTableAsync();
     }
 
-    $scope.pene;
 
-    var  updateValues = function(){
-        var data = JSON.stringify({
-            "tableInfoKey": $scope.table.tableInfoKey,
-            "columnKey": $scope.id,
-            "columnNames": [
-                $scope.table.columnNames[$scope.index]
-            ],
-            "columnValues": [
-                $scope.model[$scope.id + $scope.index]
-            ]
-        });
+    var addNewRowError = function(error){
+        console.log("getTableError");
+        console.log(error);
+    }
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
+    $scope.addNewRow = function(){
+        var data ={
+            "tableInfoKey": $rootScope.tableKey,
+            "columnNames":[],
+            "columnValues":[]
+        };
+        for(var i = 0; i < $scope.newRowColumnValues.length; ++i){
+            if($scope.newRowColumnValues[i] != null){
+                data.columnNames.push($scope.table.columnNames[i]);
+                data.columnValues.push($scope.newRowColumnValues[i]);
             }
-        });
+        }
+        $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/addNewRow",data,$rootScope.requestConfig).then(addNewRowSuccess,addNewRowError);
 
-        xhr.open("POST", "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1/modifyRow");
-        xhr.setRequestHeader("accesstoken",  $rootScope.accessToken);
-        xhr.setRequestHeader("content-type", "application/json");
-        xhr.setRequestHeader("cache-control", "no-cache");
-
-        xhr.send(data);
     }
 
-    $scope.eEditable= -1;
-    $scope.eElement;
-    $scope.model={};
-    $scope.editing = function (id, index) {
-        $scope.id =id;
-        $scope.index =index;
-        $scope.eEditable = index;
-    }
 });

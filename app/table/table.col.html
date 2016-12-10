@@ -1,10 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<style>
+    table, th , td {
+        text-align: center;
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    .table-container {
+        margin: auto;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+    .table-text{
+        text-align: center;
+    }
 
+
+
+    .select-style {
+        border: 1px solid #ccc;
+        width: auto;
+        height: 30px;
+        border-radius: 3px;
+        overflow: hidden;
+        background: #fafafa no-repeat 90% 50%;
+    }
+
+    .select-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .select-style select:focus {
+        outline: none;
+    }
+
+    .input-style {
+        border: 1px solid #ccc;
+        width: auto;
+        height: 30px;
+        border-radius: 3px;
+        overflow: hidden;
+        background: #fafafa no-repeat 90% 50%;
+    }
+
+    .input-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .input-style select:focus {
+        outline: none;
+    }
+
+    .glyphicon-plus{
+        padding: 10px;
+        text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: rgb(20, 255, 20);
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .glyphicon-minus{
+        padding: 5px;
+        text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: rgb(255, 20, 20);
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .addButt{
+        padding: 10px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+        -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+        box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+    }
+
+    .butCont{
+        padding: 100px;
+        padding-top:25px;
+        padding-left:75px;
+    }
+
+</style>
+
+<div class="table-container">
+    <table class="race-table">
+        <table border="1px solid black">
+            <tr>
+                <th ng-repeat="columnHeader in table.columnNames track by $index">
+                    {{columnHeader}}
+                </th>
+            </tr>
+            <tr ng-repeat="column in table.columns">
+                {{$index}}
+                <td ng-repeat="columnValue in column.colmnValues track by $index">
+                    <input type="text" class = "table-text" ng-model=model[column.id+$index] ng-value=columnValue ng-readonly='true'/>
+                </td>
+            </tr>
+
+        </table>
+    </table>
+</div>
+<div>
+    <div class="row">
+        <div class = "col-md-6">
+             <label>Add new row</label>
+
+            <ul ng-repeat="columnHeader in table.columnNames track by $index">
+                <li>{{columnHeader}}: <input class="input-style" type="text" ng-model ="newRowColumnValues[$index]"/></li>
+            </ul>
+
+
+            <div class="butCont">
+                <button class = "addButt" ng-click="addNewRow()">Add new row</button>
+            </div>
+
+        </div>
+        <div class = "col-md-6">
+            <label>Add new column</label>
+        </div></div>
+</div>
 </body>
 </html>
