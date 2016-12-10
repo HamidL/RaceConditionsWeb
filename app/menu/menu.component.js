@@ -3,7 +3,7 @@
 angular.module('raceConditions')
     .controller('menuController',
         function menuController($scope, $rootScope, $window, $location) {
-
+            $rootScope.selectedTable=false;
             var init = function (){
                 if(!$rootScope.registered){
                     $location.url('/login');
@@ -42,8 +42,8 @@ angular.module('raceConditions')
             };
             init();
             $scope.loadTable = function(tableKey) {
-                $rootScope.home_class = "";
-                $rootScope.table_class = "active";
+                $rootScope.selectedTable=true;
+                $rootScope.changeActive(0);
                 $rootScope.tableKey = tableKey;
                 $location.url('/table/modifyTable');
                 $rootScope.table = true;
