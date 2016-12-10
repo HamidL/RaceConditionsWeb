@@ -5,15 +5,15 @@
     <title>Main menu</title>
 </head>
 <style>
-    .col-sm-4 {
+    .uib-col-sm-4 {
         margin-left: 15px;
         margin-top: 15px;
     }
-    .col-sm-8{
+    .uib-col-sm-8{
         margin-left: 15px;
         margin-top: 15px;
     }
-    .list-group-item{
+    .uib-list-group-item{
         margin-top: -5px;
         margin-left: -5px;
     }
@@ -28,7 +28,23 @@
         </div>
 
         <div class="col-sm-8">
+            <div class="tableCreate">
+                Table name: <input type="text" ng-model = "newTable.tableName"/>
+            </div>
+            <div>
+                <h>Attributes</h>
+                <ul ng-repeat="att in newTable.attributes">
+                    <li>
+                        <input type="text" ng-model ="newTable.attributes[$index].name"/>
+                        <select ng-model="newTable.attributes[$index].type" ng-options="x for x in attrTypes">Type</select>
+                    </li>
+                </ul>
+                <button class="glyphicon glyphicon-plus" ng-click="addNewAttribute()"></button>
+                <button class="glyphicon glyphicon-minus" ng-click="delNewAttribute()"></button>
+
+            </div>
             <button>Create new table</button>
+            {{newTable}}
         </div>
     </div>
 </body>

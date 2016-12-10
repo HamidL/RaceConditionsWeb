@@ -48,4 +48,33 @@ angular.module('raceConditions')
                 $location.url('/table/modifyTable');
                 $rootScope.table = true;
             }
+
+
+            $scope.newTable={
+                tableName:"",
+                attributes:[
+                    {
+                        name: "",
+                        type: ""
+                    }
+                ]
+            }
+
+            $scope.addNewAttribute = function(){
+                var attribute=
+                {
+                    name: "",
+                    type: ""
+                };
+                $scope.newTable.attributes.push(attribute);
+            }
+
+            $scope.delNewAttribute = function(){
+                $scope.newTable.attributes.pop();
+                if($scope.newTable.attributes.size == 1){
+                    $scope.newTable.attributes.push(attribute);
+                }
+            }
+
+            $scope.attrTypes = ["Integer","Double","Date","String","Boolean"]
         });

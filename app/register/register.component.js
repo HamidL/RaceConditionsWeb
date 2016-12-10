@@ -5,7 +5,6 @@ angular.
   module('raceConditions')
     .controller('registerController',
         function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
-
             var loginSuccess = function(responseData){
                 console.log("loginSuccess");
                 console.log(responseData.data);
@@ -42,7 +41,7 @@ angular.
                     "password": $scope.password
                 });
                 $http.post("https://hlmmfg.appspot.com/_ah/api/loginAPI/v1/login",data,$rootScope.requestConfig).then(loginSuccess,loginError);
-            }
+            };
 
             $scope.login = function (){
                 if (validateUsername($scope.name) !== true) {
@@ -68,7 +67,35 @@ angular.
                 else if (validateMail($scope.mailReg) !== true) {
                     $window.alert("Invalid mail address");
                 }
+                newUser();
 
+            };
+
+            var newUserSuccess = function(responseData){
+                console.log("newUserSuccess");
+                console.log(responseData.data);
+                if(responseData.data.status == "error"){
+                    $rootScope.registered = false;
+                    $scope.hasUsername = false;
+                    $location.url('/login');
+                }
+                else{
+                    $scope.hasUsername = true;
+                    $location.url('/login');
+                }
+            }
+
+            var newUserError = function(error){
+                console.log("newUserError");
+                console.log(error);
+            }
+
+            var newUser = function () {
+                var data = JSON.stringify({
+                    "username": $scope.userReg,
+                    "password": $scope.passReg
+                });
+                $http.post("https://hlmmfg.appspot.com/_ah/api/loginAPI/v1/newUser",data,$rootScope.requestConfig).then(newUserSuccess,newUserError);
             };
 
             function validateUsername(username){
@@ -85,8 +112,12 @@ angular.
                 return re.test(mail);
             }
 
+            $scope.changeHasUsername = function(){
+                $scope.hasUsername = !$scope.hasUsername;
+            }
             var init = function () {
                 $rootScope.registered = false;
+                $scope.hasUsername = true;
             };
             init();
 });
