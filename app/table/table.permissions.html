@@ -3,6 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Modify permissions</title>
+    <style>
+        .glyphicon-plus{
+            padding: 10px;
+            text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            background: rgb(20, 255, 20);
+            -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+            -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+            box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+        }
+
+        .glyphicon-minus{
+            padding: 10px;
+            text-shadow: 0px -1px 0px rgba(30, 30, 30, 0.8);
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            background: rgb(255, 20, 20);
+            -webkit-box-shadow: 0px 0px 30px rgba(53, 53, 53, 0.75);
+            -moz-box-shadow:    0px 0px 30px rgba(53, 53, 53, 0.75);
+            box-shadow:         0px 0px 30px rgba(53, 53, 53, 0.75);
+        }
+    </style>
 </head>
 <body>
     <div class="permissions">
@@ -15,8 +40,8 @@
             <select  ng-model="userSelected1" ng-change="changedValue(userSelected1)"
                      data-ng-options="user for user in usernames">
             </select>
-                <button ng-click="addRead(userSelected1)">Add</button>
-                <button ng-click="remRead(userSelected1)">Remove</button>
+                <button class="glyphicon glyphicon-plus" ng-click="addRead(userSelected1)"></button>
+                <button class="glyphicon glyphicon-minus" ng-click="remRead(userSelected1)"></button>
             </div>
         </div>
         <div class="writePermissions" style="clear:both">
@@ -30,8 +55,8 @@
                     <select  ng-model="userSelected2" ng-change="changedValue(userSelected2)"
                                data-ng-options="user for user in usernames">
                 </select>
-                    <button ng-click="addWrite(userSelected2)">Add</button>
-                    <button ng-click="remWrite(userSelected2)">Remove</button>
+                    <button class="glyphicon glyphicon-plus" ng-click="addWrite(userSelected2)"></button>
+                    <button class="glyphicon glyphicon-minus" ng-click="remWrite(userSelected2)"></button>
                 </div>
 
         </div>

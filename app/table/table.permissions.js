@@ -33,8 +33,7 @@ angular.module('raceConditions')
                         }
                     };
                     var tableData = JSON.stringify({"tableInfoKey": $rootScope.tableKey});
-                    var URL = "https://hlmmfg.appspot.com/_ah/api/tableAPI/v1";
-                    xhttp.open("POST", URL+"/getTableInfo");
+                    xhttp.open("POST", $rootScope.CURL+"tableAPI/v1/getTableInfo");
                     xhttp.setRequestHeader("content-type", "application/json");
                     xhttp.setRequestHeader("cache-control", "no-cache");
                     xhttp.setRequestHeader("accesstoken", $rootScope.accessToken);
@@ -66,8 +65,7 @@ angular.module('raceConditions')
                     }
                 };
                 var data = "";
-                var URL = "https://hlmmfg.appspot.com/_ah/api/usersAPI/v1";
-                xhttp.open("POST", URL+"/getAllUsers");
+                xhttp.open("POST", $rootScope.RCURL+"/usersAPI/v1/getAllUsers");
                 xhttp.setRequestHeader("content-type", "application/json");
                 xhttp.setRequestHeader("cache-control", "no-cache");
                 xhttp.send(data);
@@ -90,7 +88,7 @@ angular.module('raceConditions')
                         'accessToken':$rootScope.accessToken
                     }
                 };
-                $http.post("https://hlmmfg.appspot.com/_ah/api/tableAPI/v1"+URL2,data,httpconfig).
+                $http.post($rootScope.RCURL+"/tableAPI/v1"+URL2,data,httpconfig).
                     then(getUserTablesSuccess,getUserTablesError);
             }
             $scope.addRead = function(user) {
