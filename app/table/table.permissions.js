@@ -26,10 +26,10 @@ angular.module('raceConditions')
                              }
                              }*/
                             jsonResp = JSON.parse(xhttp.responseText).ret;
-                            $scope.readUsers = jsonResp.readUsers;
-                            console.log(jsonResp.readUsers);
-                            $scope.writeUsers = jsonResp.writeUsers;
-                            console.log(jsonResp.writeUsers);
+                            $scope.readUsersNames = jsonResp.readUsersNames;
+                            console.log(jsonResp.readUsersNames);
+                            $scope.writeUsersNames = jsonResp.writeUsersNames;
+                            console.log(jsonResp.writeUsersNames);
                             $scope.$apply();
                         }
                     };

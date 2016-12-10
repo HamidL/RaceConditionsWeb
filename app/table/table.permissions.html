@@ -8,15 +8,16 @@
     <div class="permissions">
         <div class="readPermissions">
             <h2>Read Permissions:</h2>
-            <div ng-repeat="user in readUsers" style="float:left">
-                {{user}} <p ng-if="!$last"> {{","}}</p>
-            </div>
+            <p ng-repeat="user in readUsersNames" style="float:left">
+                {{user}} <span ng-if="!$last"> {{","}}</span>
+            </p>
+            <br>
         </div>
         <div class="writePermissions">
             <h2>Write Permissions:</h2>
-            <div ng-repeat="user in writeUsers" style="float:left">
-                {{user}} <p ng-if="!$last"> {{","}}</p>
-            </div>
+            <p ng-repeat="user in writeUsersNames" style="float:left">
+                {{user}} <span ng-if="!$last"> {{","}}</span>
+            </p>
         </div>
     </div>
 </body>
