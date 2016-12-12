@@ -17,8 +17,7 @@ This application allows to create, modify and erase the contents of tables. It a
 ## Workings of the Application
 
 - The application filesystem layout structure is based on the [angular-seed][angular-seed] project.
-- There is no dynamic backend (no application server) for this application. Instead we fake the
-  application server by fetching static JSON files.
+- There is a dynamic backend (application server) for this application that runs on AppEngine server. You can get the code on https://github.com/HamidL/RaceConditionsWeb
 - Read the _Development_ section at the end to familiarize yourself with running and developing
   an Angular application.
 
