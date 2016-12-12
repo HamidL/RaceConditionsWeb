@@ -1,23 +1,12 @@
-# AngularJS Phone Catalog Tutorial Application
+# AngularJS Race Condition Application
 
 
 ## Overview
 
-This application takes the developer through the process of building a web-application using
-AngularJS. The application is loosely based on the **Google Phone Gallery**, which no longer exists.
-Here is a historical reference: [Google Phone Gallery on WayBack][google-phone-gallery]
-
-Each tagged commit is a separate lesson teaching a single aspect of the framework.
-
-The full tutorial can be found at https://docs.angularjs.org/tutorial.
+This application allows to create, modify and erase the contents of tables. It also allows to give read and write premissions to other users in order to share a table.
 
 
 ## Prerequisites
-
-### Git
-
-- A good place to learn about setting up git is [here][git-setup].
-- You can find documentation and download git [here][git-home].
 
 ### Node.js and Tools
 
@@ -34,140 +23,8 @@ The full tutorial can be found at https://docs.angularjs.org/tutorial.
   an Angular application.
 
 
-## Commits / Tutorial Outline
 
-You can check out any point of the tutorial using:
-
-```
-git checkout step-?
-```
-
-To see the changes made between any two lessons use the `git diff` command:
-
-```
-git diff step-?..step-?
-```
-
-### step-0 _Bootstrapping_
-
-- Add the 'angular.js' script.
-- Add the `ngApp` directive to bootstrap the application.
-- Add a simple template with an expression.
-
-### step-1 _Static Template_
-
-- Add a stylesheet file ('app/app.css').
-- Add a static list with two phones.
-
-### step-2 _Angular Templates_
-
-- Convert the static phone list to dynamic by:
-  - Creating a `PhoneListController` controller.
-  - Extracting the data from HTML into the controller as an in-memory dataset.
-  - Converting the static document into a template with the use of the `ngRepeat` directive.
-- Add a simple unit test for the `PhoneListController` controller to show how to write tests and
-  run them using Karma.
-
-### step-3 _Components_
-
-- Introduce components.
-- Combine the controller and the template into a reusable, isolated `phoneList` component.
-- Refactor the application and tests to use the `phoneList` component.
-
-### step-4 _Directory and File Organization_
-
-- Refactor the layout of files and directories, applying best practices and techniques that will
-  make the application easier to maintain and expand in the future:
-  - Put each entity in its own file.
-  - Organize code by feature area (instead of by function).
-  - Split code into modules that other modules can depend on.
-  - Use external templates in `.html` files (instead of inline HTML strings).
-
-### step-5 _Filtering Repeaters_
-
-- Add a search box to demonstrate:
-  - How the data-binding works on input fields.
-  - How to use the `filter` filter.
-  - How `ngRepeat` automatically shrinks and grows the number of phones in the view.
-- Add an end-to-end test to:
-  - Show how end-to-end tests are written and used.
-  - Prove that the search box and the repeater are correctly wired together.
-
-### step-6 _Two-way Data Binding_
-
-- Add an `age` property to the phone model.
-- Add a drop-down menu to control the phone list order.
-- Override the default order value in controller.
-- Add unit and end-to-end tests for this feature.
-
-### step-7 _XHR & Dependency Injection_
-
-- Replace the in-memory dataset with data loaded from the server (in the form of a static
-  'phone.json' file to keep the tutorial backend agnostic):
-  - The JSON data is loaded using the `$http` service.
-- Demonstrate the use of `services` and `dependency injection` (DI):
-  - `$http` is injected into the controller through DI.
-  - Introduce DI annotation methods: `.$inject` and inline array
-
-### step-8 _Templating Links & Images_
-
-- Add a phone image and links to phone pages.
-- Add an end-to-end test that verifies the phone links.
-- Tweak the CSS to style the page just a notch.
-
-### step-9 _Routing & Multiple Views_
-
-- Introduce the `$route` service, which allows binding URLs to views for routing and deep-linking:
-  - Add the `ngRoute` module as a dependency.
-  - Configure routes for the application.
-  - Use the `ngView` directive in 'index.html'.
-- Create a phone list route (`/phones`):
-  - Map `/phones` to the existing `phoneList` component.
-- Create a phone detail route (`/phones/:phoneId`):
-  - Map `/phones/:phoneId` to a new `phoneDetail` component.
-  - Create a dummy `phoneDetail` component, which displays the selected phone ID.
-  - Pass the `phoneId` parameter to the component's controller via `$routeParams`.
-
-### step-10 _More Templating_
-
-- Implement fetching data for the selected phone and rendering to the view:
-  - Use `$http` in `PhoneDetailController` to fetch the phone details from a JSON file.
-  - Create the template for the detail view.
-- Add CSS styles to make the phone detail page look "pretty-ish".
-
-### step-11 _Custom Filters_
-
-- Implement a custom `checkmark` filter.
-- Update the `phoneDetail` template to use the `checkmark` filter.
-- Add a unit test for the `checkmark` filter.
-
-### step-12 _Event Handlers_
-
-- Make the thumbnail images in the phone detail view clickable:
-  - Introduce a `mainImageUrl` property on `PhoneDetailController`.
-  - Implement the `setImage()` method for changing the main image.
-  - Use `ngClick` on the thumbnails to register a handler that changes the main image.
-  - Add an end-to-end test for this feature.
-
-### step-13 _REST and Custom Services_
-
-- Replace `$http` with `$resource`.
-- Create a custom `Phone` service that represents the RESTful client.
-- Use a custom Jasmine equality tester in unit tests to ignore irrelevant properties.
-
-### step-14 _Animations_
-
-- Add animations to the application:
-  - Animate changes to the phone list, adding, removing and reordering phones with `ngRepeat`.
-  - Animate view transitions with `ngView`.
-  - Animate changes to the main phone image in the phone detail view.
-- Showcase three different kinds of animations:
-  - CSS transition animations.
-  - CSS keyframe animations.
-  - JavaScript-based animations.
-
-
-## Development with `angular-phonecat`
+## Development with `raceConditions`
 
 The following docs describe how you can test and develop this application further.
 
@@ -222,16 +79,9 @@ _Running the Application during Development_ section, above.
 ```
 app/                     --> all the source code of the app (along with unit tests)
   bower_components/...   --> 3rd party JS/CSS libraries, including Angular and jQuery
-  core/                  --> all the source code of the core module (stuff used throughout the app)
-    checkmark/...        --> files for the `checkmark` filter, including JS source code, specs
-    phone/...            --> files for the `core.phone` submodule, including JS source code, specs
-    core.module.js       --> the core module
-  img/...                --> image files
-  phone-detail/...       --> files for the `phoneDetail` module, including JS source code, HTML templates, specs
-  phone-list/...         --> files for the `phoneList` module, including JS source code, HTML templates, specs
-  phones/...             --> static JSON files with phone data (used to fake a backend API)
-  app.animations.css     --> hooks for running CSS animations with `ngAnimate`
-  app.animations.js      --> hooks for running JS animations with `ngAnimate`
+  header/...             --> files for the `header` module, including JS source code, HTML templates, specs
+  menu/...               --> files for the `menu` module, including JS source code, HTML templates, specs
+  register/...           -->  files for the `menu` module, including JS source code, HTML templates, specs
   app.config.js          --> app-wide configuration of Angular services
   app.css                --> default stylesheet
   app.module.js          --> the main app module
@@ -251,11 +101,6 @@ bower.json               --> Bower specific metadata, including client-side depe
 karma.conf.js            --> config file for running unit tests with Karma
 package.json             --> Node.js specific metadata, including development tools dependencies
 ```
-
-
-## Contact
-
-For more information on AngularJS, please check out https://angularjs.org/.
 
 
 [angular-seed]: https://github.com/angular/angular-seed

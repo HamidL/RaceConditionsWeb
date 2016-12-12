@@ -6,13 +6,13 @@ angular.
     .controller('registerController',
         function registerController($scope, $timeout, $http, $rootScope, $window,$location) {
 
+            $rootScope.RCURL="PUT YOUT URL HERE";
+
             var init = function () {
                 $rootScope.registered = false;
                 $scope.hasUsername = true;
             };
             init();
-
-            $rootScope.RCURL="https://hlmmfg.appspot.com/_ah/api";
 
             var loginSuccess = function(responseData){
                 if(responseData.data.status == "error"){
